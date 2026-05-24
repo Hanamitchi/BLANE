@@ -1,13 +1,7 @@
-/* ============================================================
-   BLANE - Biological Adaptive Nutrition Engine
-   Main JavaScript
-   ============================================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ----------------------------------------------------------
-     1. NAVBAR — scroll effect & hamburger
-  ---------------------------------------------------------- */
+  /*  1. NAVBAR — scroll effect & hamburger */
   const navbar    = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -34,9 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  /* ----------------------------------------------------------
-     2. MODAL — login / register
-  ---------------------------------------------------------- */
+  /*  2. MODAL — login / register */
   const modalOverlay  = document.getElementById('modal-overlay');
   const modalCloseBtn = document.getElementById('modal-close');
   const tabLogin      = document.getElementById('tab-login');
