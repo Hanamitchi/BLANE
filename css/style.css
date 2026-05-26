@@ -183,6 +183,8 @@ ul {
   height: 2px;
   background:#e8f5ee;
   border-radius: 2px;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
 }
 
 .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -195,6 +197,13 @@ ul {
   flex-direction: column;
   gap: 0;
   padding: 12px 0 20px;
+  background: rgba(6, 13, 10, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--color-border);
+  margin: 0 -32px;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 
 .mobile-menu a {
