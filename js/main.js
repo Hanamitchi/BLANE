@@ -1,7 +1,4 @@
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  /*  1. NAVBAR — scroll effect & hamburger */
+/*  1. NAVBAR — scroll effect & hamburger */
   const navbar    = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -178,5 +175,58 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+  
 
-}); /* end DOMContentLoaded */
+/* eto yung sa footer modal */
+  function openFeedbackModal() {
+  document.getElementById("feedbackModal").style.display = "block";
+}
+
+function closeFeedbackModal() {
+  document.getElementById("feedbackModal").style.display = "none";
+}
+
+function openQuestionModal() {
+  document.getElementById("questionModal").style.display = "block";
+}
+
+function closeQuestionModal() {
+  document.getElementById("questionModal").style.display = "none";
+}
+
+// close when clicking outside modal
+window.onclick = function(event) {
+  const feedback = document.getElementById("feedbackModal");
+  const question = document.getElementById("questionModal");
+
+  if (event.target === feedback) feedback.style.display = "none";
+  if (event.target === question) question.style.display = "none";
+};
+
+/* eto yung sa privacy and terms sa regisration modal */
+function openTermsModal(event) {
+  event.preventDefault();
+  document.getElementById("termsModal").style.display = "block";
+}
+
+function closeTermsModal() {
+  document.getElementById("termsModal").style.display = "none";
+}
+
+function openPrivacyModal(event) {
+  event.preventDefault();
+  document.getElementById("privacyModal").style.display = "block";
+}
+
+function closePrivacyModal() {
+  document.getElementById("privacyModal").style.display = "none";
+}
+
+// close when clicking outside modal
+window.onclick = function(event) {
+  const terms = document.getElementById("termsModal");
+  const privacy = document.getElementById("privacyModal");
+
+  if (event.target === terms) terms.style.display = "none";
+  if (event.target === privacy) privacy.style.display = "none";
+};

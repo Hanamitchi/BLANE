@@ -385,52 +385,63 @@
           </a>
           <p>Biological Adaptive Nutrition Engine — an intelligent nutrition recommendation system for real life.</p>
         </div>
-
-        <!-- Product links or palitan nalang ng malupit -->
-        <div>
-          <div class="footer-col-title">Product</div>
-          <ul class="footer-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#" data-modal="register">Get Started</a></li>
-            <li><a href="#" data-modal="login">Sign In</a></li>
-          </ul>
-        </div>
-
-        <!-- System links -->
-        <div>
-          <div class="footer-col-title">System</div>
-          <ul class="footer-links">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Meal Planner</a></li>
-            <li><a href="#">Market Scan</a></li>
-            <li><a href="#">Health Sync</a></li>
-          </ul>
-        </div>
-
         <!-- palitan nalang to -->
         <div>
-          <div class="footer-col-title">Info</div>
-          <ul class="footer-links">
-            <li><About the Project</li>
-            <li>Research Paper</li>
-            <li>Privacy Policy</li>
-            <li>Terms of Use</li>
+          <div class="footer-col-title">Socials</div>
+          <ul class="footer-links">                        
+            <li><a href="https:instagram.com/step_up_by_je/">BLANE</a></li>
+            <li><a href="https:stepupbyje.netlify.app">BLANE</a></li>
           </ul>
         </div>
+        <div>
+          <div class="footer-col-title">Contacts</div>
+          <ul class="footer-links">                        
+            <li>blanecompany@gmail.com</li>
+            <li>+63 123 456 789</li>
+          </ul>
+        </div>
+
+
+        <div>
+          <div class="footer-col-title" id="feedback">FeedBack</div>
+          <ul class="footer-links">                          
+          <li><a href="#" onclick="openQuestionModal()">Ask a question?</a></li>  
+          <li><a href="#" onclick="openFeedbackModal()">Submit a feedback</a></li>
+          </ul>
+        </div>
+        <!-- FEEDBACK MODAL -->
+<div id="feedbackModal" class="feedbackmodal">
+  <div class="modal-content">
+    <span class="close" onclick="closeFeedbackModal()">&times;</span>
+    <h2>Submit Feedback</h2>
+
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Your feedback..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+<!-- QUESTION MODAL -->
+<div id="questionModal" class="feedbackmodal">
+  <div class="modal-content">
+    <span class="close" onclick="closeQuestionModal()">&times;</span>
+    <h2>Ask a Question</h2>
+
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <textarea placeholder="Your question..." required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
 
       </div>
 
       <div class="footer-bottom">
         <p>© 2026 BLANE — Biological Adaptive Nutrition Engine. All Rights Reserve.</p>
-
-        <!-- Palitan nalang din to nyan at gawing modal -->
-        <div class="footer-bottom-links">
-          <li>Privacy</li>
-          <li>Terms</li>
-          <li>Contact</li>
-
-        </div>
       </div>
     </div>
   </footer>
@@ -440,32 +451,30 @@
        LOGIN / REGISTER MODAL
   ====================================================== -->
   <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+    <div class="modal" >
 
       <button class="modal-close" id="modal-close" aria-label="Close modal">✕</button>
 
       <!-- Logo centered -->
       <div class="modal-logo">
-        <a href="#" class="logo">
           <span class="logo-text"><span>BL</span>ANE</span>
-        </a>
       </div>
 
       <!-- Tabs -->
       <div class="modal-tabs">
         <button class="modal-tab active" id="tab-login">Sign in</button>
-        <button class="modal-tab" id="tab-register">Register</button>
+        <button class="modal-tab" id="tab-register">Sign Up</button>
       </div>
 
       <!-- Login form -->
       <form id="form-login" novalidate>
         <div class="form-group">
           <label class="form-label" for="login-email">Email address</label>
-          <input class="form-input" type="email" id="login-email" placeholder="you@example.com" required />
+          <input class="form-input" type="email" id="login-email" placeholder="you@gmail.com" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="login-password">Password</label>
-          <input class="form-input" type="password" id="login-password" placeholder="••••••••" required />
+          <input class="form-input" type="password" id="login-password" placeholder="******" required />
         </div>
         <div class="form-forgot"><a href="#">Forgot password?</a></div>
         <button type="submit" class="btn btn-primary btn-lg form-submit">Sign in</button>
@@ -479,11 +488,11 @@
       <form id="form-register" style="display:none;" novalidate>
         <div class="form-group">
           <label class="form-label" for="reg-name">Full name</label>
-          <input class="form-input" type="text" id="reg-name" placeholder="Juan dela Cruz" required />
+          <input class="form-input" type="text" id="reg-name" placeholder="Thomas Shelby" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-email">Email address</label>
-          <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" required />
+          <input class="form-input" type="email" id="reg-email" placeholder="you@gmail.com" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-password">Password</label>
@@ -495,9 +504,48 @@
         </div>
         <button type="submit" class="btn btn-primary btn-lg form-submit">Create account</button>
         <p class="form-terms">
-          By registering you agree to our
-          <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
-        </p>
+  By registering you agree to our
+  <a href="#" onclick="openTermsModal(event)">Terms of Use</a>
+  and
+  <a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a>.
+</p>
+<!-- TERMS MODAL -->
+<div id="termsModal" class="privacyandtermsmodal">
+  <div class="modal-content">
+    <span class="close" onclick="closeTermsModal()">&times;</span>
+    <h2>Terms of Use</h2>
+
+    <p>
+      By using BLANE (Biological Adaptive Nutrition Engine), you agree to use the system responsibly.
+      The system provides nutrition recommendations based on available data and should not be considered medical advice.
+    </p>
+
+    <p>
+      Users must ensure that all provided health information is accurate. Misuse of the system may result in incorrect recommendations.
+    </p>
+  </div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div id="privacyModal" class="privacyandtermsmodal">
+  <div class="modal-content">
+    <span class="close" onclick="closePrivacyModal()">&times;</span>
+    <h2>Privacy Policy</h2>
+
+    <p>
+      BLANE collects user input such as health data and preferences solely to generate personalized nutrition recommendations.
+    </p>
+
+    <p>
+      We do not sell or share personal data with third parties. All stored data is used only for system functionality and improvement.
+    </p>
+
+    <p>
+      Users may request deletion of their data at any time.
+    </p>
+  </div>
+</div>
+
       </form>
 
     </div>
@@ -506,14 +554,6 @@
 
   <!-- Main JavaScript -->
   <script src="js/main.js"></script>
-
-  <!-- Switch-to-register inline binding (needs DOM ready) -->
-  <script>
-    document.getElementById('switch-to-register').addEventListener('click', function (e) {
-      e.preventDefault();
-      document.getElementById('tab-register').click();
-    });
-  </script>
 
 </body>
 </html>
