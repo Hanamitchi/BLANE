@@ -92,39 +92,114 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  /* Form submit demo handlers */
-  formLogin.addEventListener('submit', function (e) {
-    e.preventDefault();
-    handleLoginSubmit();
-  });
+  /* ----------------------------------------------------------
+     SUPABASE — replace the two values below with your own
+  ---------------------------------------------------------- */
+  const SUPABASE_URL  = 'https://jszolfwdnqxhppphzvhj.supabase.co';   // e.g. https://xxxx.supabase.co
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzem9sZndkbnF4aHBwcGh6dmhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4MDc3MTEsImV4cCI6MjA5NTM4MzcxMX0.RrL-Ou-MJ66wErLmxH76GM-TgZLk0SZ4CIJEsTHQIu4';
 
-  formRegister.addEventListener('submit', function (e) {
-    e.preventDefault();
-    handleRegisterSubmit();
-  });
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  function handleLoginSubmit() {
-    const btn = formLogin.querySelector('.form-submit');
-    btn.textContent = 'Signing in…';
-    btn.disabled    = true;
-    /* TODO: connect to backend auth */
-    setTimeout(function () {
-      btn.textContent = 'Sign in';
-      btn.disabled    = false;
-      alert('Login feature coming soon! Backend integration pending.');
-    }, 1200);
+  /* ---- helper: show inline message inside a form ---- */
+  function showFormMsg(form, message, isError) {
+    let msgEl = form.querySelector('.form-msg');
+    if (!msgEl) {
+      msgEl = document.createElement('p');
+      msgEl.className = 'form-msg';
+      form.querySelector('.form-submit').insertAdjacentElement('afterend', msgEl);
+    }
+    msgEl.textContent = message;
+    msgEl.style.cssText = [
+      'font-size:13px',
+      'text-align:center',
+      'margin-top:10px',
+      'padding:8px 12px',
+      'border-radius:8px',
+      isError
+        ? 'color:#ff6b6b;background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.25)'
+        : 'color:#2ddc7a;background:rgba(45,220,122,0.1);border:1px solid rgba(45,220,122,0.25)'
+    ].join(';');
   }
 
-  function handleRegisterSubmit() {
-    const btn = formRegister.querySelector('.form-submit');
+  /* ---- REGISTER ---- */
+  formRegister.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const name     = document.getElementById('reg-name').value.trim();
+    const email    = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const confirm  = document.getElementById('reg-confirm').value;
+    const btn      = formRegister.querySelector('.form-submit');
+
+    /* client-side validation */
+    if (password !== confirm) {
+      showFormMsg(formRegister, 'Passwords do not match.', true);
+      return;
+    }
+    if (password.length < 6) {
+      showFormMsg(formRegister, 'Password must be at least 6 characters.', true);
+      return;
+    }
+
     btn.textContent = 'Creating account…';
     btn.disabled    = true;
-    /* TODO: connect to backend auth */
-    setTimeout(function () {
-      btn.textContent = 'Create account';
-      btn.disabled    = false;
-      alert('Registration feature coming soon! Backend integration pending.');
-    }, 1200);
+
+    const { error } = await _supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } }
+    });
+
+    btn.textContent = 'Create account';
+    btn.disabled    = false;
+
+    if (error) {
+      showFormMsg(formRegister, error.message, true);
+      return;
+    }
+
+    /* Success — clear the register form then switch to login tab */
+    formRegister.reset();
+    switchTab('login');
+    showFormMsg(
+      formLogin,
+      '✓ Account created! Check your email to confirm, then sign in.',
+      false
+    );
+  });
+
+  /* ---- LOGIN ---- */
+  formLogin.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn      = formLogin.querySelector('.form-submit');
+
+    btn.textContent = 'Signing in…';
+    btn.disabled    = true;
+
+    const { error } = await _supabase.auth.signInWithPassword({ email, password });
+
+    btn.textContent = 'Sign in';
+    btn.disabled    = false;
+
+    if (error) {
+      showFormMsg(formLogin, error.message, true);
+      return;
+    }
+
+    /* Redirect to the app after successful login */
+    window.location.href = 'home.html';
+  });
+
+  /* ---- switch-to-register link inside login form ---- */
+  const switchToRegister = document.getElementById('switch-to-register');
+  if (switchToRegister) {
+    switchToRegister.addEventListener('click', function (e) {
+      e.preventDefault();
+      switchTab('register');
+    });
   }
 
 
