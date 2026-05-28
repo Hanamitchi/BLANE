@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — BLANE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
+</head>
+<body class="dash-body">
+
+  <!-- =====================================================
+       TOP NAVBAR
+  ====================================================== -->
+  <nav class="dash-navbar">
+
+    <!-- Logo -->
+    <a href="dashboard.html" class="dash-navbar-logo">
+      <div class="dash-navbar-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C7.4 2 4 5.4 4 9c0 2.4 1.2 4.5 3 5.7V18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-3.3c1.8-1.2 3-3.3 3-5.7 0-3.6-3.4-7-8-7zm0 2c3.3 0 6 2.7 6 5 0 2-1.2 3.7-3 4.6V18H9v-4.4C7.2 12.7 6 11 6 9c0-2.3 2.7-5 6-5z"/>
+        </svg>
+      </div>
+      <span class="dash-navbar-logo-text"><span>BL</span>ANE</span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <nav class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Meal Plan
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Recipes
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Markets
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div class="dash-navbar-spacer"></div>
+
+    <!-- Right side -->
+    <div class="dash-navbar-right">
+      <span class="dash-greeting">Hello, <strong id="dash-greeting-name">...</strong></span>
+
+      <!-- Avatar + dropdown -->
+      <div style="position:relative;">
+        <button class="dash-avatar-btn" id="dash-avatar-btn">
+          <span id="dash-avatar-initials">?</span>
+        </button>
+
+        <div class="dash-dropdown" id="dash-dropdown">
+          <!-- User info -->
+          <div style="padding:8px 12px 10px; border-bottom:1px solid rgba(45,220,122,0.1); margin-bottom:6px;">
+            <div style="font-size:13px; font-weight:600; color:#e8f5ee;" id="dropdown-full-name">...</div>
+            <div style="font-size:11px; color:#4d6e5a; margin-top:2px;" id="dropdown-email">...</div>
+          </div>
+          <a href="#" class="dash-dropdown-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            My Profile
+          </a>
+          <a href="onboarding.html" class="dash-dropdown-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            Edit Health Profile
+          </a>
+          <a href="#" class="dash-dropdown-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            Settings
+          </a>
+          <div class="dash-dropdown-divider"></div>
+          <button class="dash-dropdown-item danger" onclick="handleLogout()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="dash-hamburger" id="dash-hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="dash-mobile-nav" id="dash-mobile-nav">
+    <a href="dashboard.html" class="dash-nav-link active">Dashboard</a>
+    <a href="#" class="dash-nav-link">Meal Plan</a>
+    <a href="#" class="dash-nav-link">Recipes</a>
+    <a href="#" class="dash-nav-link">Markets</a>
+    <a href="#" class="dash-nav-link">Profile</a>
+    <a href="onboarding.html" class="dash-nav-link">Edit Health Profile</a>
+    <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+  <main class="dash-main">
+    <div class="dash-content">
+
+      <!-- Page header -->
+      <div class="dash-page-header">
+        <div>
+          <h1 class="dash-page-title">Good day, <span style="color:#2ddc7a;" id="dash-greeting-name-2">...</span> 👋</h1>
+          <p class="dash-page-date" id="dash-date">Loading...</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <span class="widget-badge" style="font-size:12px;padding:6px 14px;">● Live sync active</span>
+        </div>
+      </div>
+
+      <!-- Widget grid -->
+      <div class="dash-grid">
+
+
+        <!-- ================================================
+             WIDGET 1 — TODAY'S MEAL PLAN  (col 8)
+        ================================================= -->
+        <div class="widget col-8">
+          <div class="widget-header">
+            <div class="widget-title-row">
+              <div class="widget-icon">🍽️</div>
+              <div>
+                <div class="widget-title">Today's Meal Plan</div>
+                <div class="widget-subtitle">Adapted to your goals &amp; local market</div>
+              </div>
+            </div>
+            <span class="widget-badge">AI Generated</span>
+          </div>
+
+          <!-- Meal tabs -->
+          <div class="meal-tabs">
+            <button class="meal-tab-btn active" data-meal="breakfast">Breakfast</button>
+            <button class="meal-tab-btn" data-meal="lunch">Lunch</button>
+            <button class="meal-tab-btn" data-meal="dinner">Dinner</button>
+            <button class="meal-tab-btn" data-meal="snack">Snack</button>
+          </div>
+
+          <!-- Breakfast panel -->
+          <div class="meal-panel active" id="meal-breakfast">
+            <div class="meal-main-card">
+              <div class="meal-emoji-big">🍳</div>
+              <div class="meal-main-info">
+                <div class="meal-main-name">Egg &amp; Malunggay Scramble</div>
+                <div class="meal-main-meta">7:00 AM &nbsp;·&nbsp; 15 min prep &nbsp;·&nbsp; Easy</div>
+                <div class="meal-macros-row">
+                  <div class="meal-macro-chip"><span>24g</span> <small>Protein</small></div>
+                  <div class="meal-macro-chip"><span>18g</span> <small>Carbs</small></div>
+                  <div class="meal-macro-chip"><span>12g</span> <small>Fats</small></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div class="meal-kcal-tag">380<small>kcal</small></div>
+              </div>
+            </div>
+            <div class="meal-ingredients">
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Eggs</span>
+                <span class="ingredient-amount">2 pcs</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Malunggay leaves</span>
+                <span class="ingredient-amount">1 handful</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Garlic</span>
+                <span class="ingredient-amount">2 cloves</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Cooking oil</span>
+                <span class="ingredient-amount">1 tsp</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lunch panel -->
+          <div class="meal-panel" id="meal-lunch">
+            <div class="meal-main-card">
+              <div class="meal-emoji-big">🥗</div>
+              <div class="meal-main-info">
+                <div class="meal-main-name">Chicken &amp; Veggie Rice Bowl</div>
+                <div class="meal-main-meta">12:00 PM &nbsp;·&nbsp; 25 min prep &nbsp;·&nbsp; Medium</div>
+                <div class="meal-macros-row">
+                  <div class="meal-macro-chip"><span>38g</span> <small>Protein</small></div>
+                  <div class="meal-macro-chip"><span>52g</span> <small>Carbs</small></div>
+                  <div class="meal-macro-chip"><span>10g</span> <small>Fats</small></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div class="meal-kcal-tag">520<small>kcal</small></div>
+              </div>
+            </div>
+            <div class="meal-ingredients">
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Chicken breast</span>
+                <span class="ingredient-amount">150g</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Brown rice</span>
+                <span class="ingredient-amount">1 cup cooked</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Broccoli</span>
+                <span class="ingredient-amount">80g</span>
+                <span class="ingredient-avail no">⚠ Check market</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dinner panel -->
+          <div class="meal-panel" id="meal-dinner">
+            <div class="meal-main-card">
+              <div class="meal-emoji-big">🍲</div>
+              <div class="meal-main-info">
+                <div class="meal-main-name">Sinigang na Isda</div>
+                <div class="meal-main-meta">6:30 PM &nbsp;·&nbsp; 35 min prep &nbsp;·&nbsp; Medium</div>
+                <div class="meal-macros-row">
+                  <div class="meal-macro-chip"><span>32g</span> <small>Protein</small></div>
+                  <div class="meal-macro-chip"><span>28g</span> <small>Carbs</small></div>
+                  <div class="meal-macro-chip"><span>8g</span> <small>Fats</small></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div class="meal-kcal-tag">480<small>kcal</small></div>
+              </div>
+            </div>
+            <div class="meal-ingredients">
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Bangus / Tilapia</span>
+                <span class="ingredient-amount">200g</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Kangkong</span>
+                <span class="ingredient-amount">1 bundle</span>
+                <span class="ingredient-avail yes">✓ Seasonal</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Tamarind mix</span>
+                <span class="ingredient-amount">1 pack</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Snack panel -->
+          <div class="meal-panel" id="meal-snack">
+            <div class="meal-main-card">
+              <div class="meal-emoji-big">🍌</div>
+              <div class="meal-main-info">
+                <div class="meal-main-name">Banana &amp; Peanut Butter</div>
+                <div class="meal-main-meta">3:00 PM &nbsp;·&nbsp; 5 min prep &nbsp;·&nbsp; Easy</div>
+                <div class="meal-macros-row">
+                  <div class="meal-macro-chip"><span>6g</span> <small>Protein</small></div>
+                  <div class="meal-macro-chip"><span>30g</span> <small>Carbs</small></div>
+                  <div class="meal-macro-chip"><span>8g</span> <small>Fats</small></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div class="meal-kcal-tag">210<small>kcal</small></div>
+              </div>
+            </div>
+            <div class="meal-ingredients">
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Ripe banana</span>
+                <span class="ingredient-amount">1 pc</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+              <div class="meal-ingredient-row">
+                <div class="ingredient-dot"></div>
+                <span class="ingredient-name">Peanut butter</span>
+                <span class="ingredient-amount">1 tbsp</span>
+                <span class="ingredient-avail yes">✓ Available</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily calorie summary -->
+          <div class="daily-cal-summary">
+            <div class="daily-cal-row">
+              <span class="daily-cal-label">Daily calories</span>
+              <span class="daily-cal-numbers"><span>1,590</span> / 1,840 kcal</span>
+            </div>
+            <div class="daily-cal-bar-bg">
+              <div class="daily-cal-bar-fill" id="daily-cal-bar" style="width:0%;" data-width="86%"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ================================================
+             WIDGET 2 — BMI & BODY STATS  (col 4)
+        ================================================= -->
+        <div class="widget col-4">
+          <div class="widget-header">
+            <div class="widget-title-row">
+              <div class="widget-icon">📊</div>
+              <div>
+                <div class="widget-title">BMI &amp; Body Stats</div>
+                <div class="widget-subtitle">Based on your profile</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BMI ring + category -->
+          <div class="bmi-display">
+            <div class="bmi-ring-wrap">
+              <svg viewBox="0 0 90 90" width="90" height="90">
+                <circle cx="45" cy="45" r="36" fill="none" stroke="#111f16" stroke-width="9"/>
+                <circle cx="45" cy="45" r="36" fill="none" stroke="#2ddc7a" stroke-width="9"
+                  stroke-dasharray="0 226" stroke-dashoffset="0" stroke-linecap="round"
+                  id="bmi-ring-fill"/>
+              </svg>
+              <div class="bmi-ring-center">
+                <div class="bmi-value" id="bmi-number">--</div>
+                <div class="bmi-label-sm">BMI</div>
+              </div>
+            </div>
+            <div class="bmi-category-wrap">
+              <div class="bmi-category-name" id="bmi-category-name">--</div>
+              <div class="bmi-category-desc" id="bmi-category-desc">Loading your profile data...</div>
+            </div>
+          </div>
+
+          <!-- Scale bar -->
+          <div class="bmi-scale">
+            <div class="bmi-scale-bar">
+              <div class="bmi-scale-marker" id="bmi-scale-marker" style="left:0%"></div>
+            </div>
+            <div class="bmi-scale-labels">
+              <span>Under</span>
+              <span>Normal</span>
+              <span>Over</span>
+              <span>Obese</span>
+            </div>
+          </div>
+
+          <!-- Body stats -->
+          <div class="body-stats-grid">
+            <div class="body-stat-item">
+              <div class="body-stat-label">Height</div>
+              <div class="body-stat-value" id="stat-height">-- <span>cm</span></div>
+            </div>
+            <div class="body-stat-item">
+              <div class="body-stat-label">Weight</div>
+              <div class="body-stat-value" id="stat-weight">-- <span>kg</span></div>
+            </div>
+            <div class="body-stat-item">
+              <div class="body-stat-label">BMI Index</div>
+              <div class="body-stat-value" id="stat-bmi-val">--</div>
+            </div>
+            <div class="body-stat-item">
+              <div class="body-stat-label">Ideal Range</div>
+              <div class="body-stat-value" style="font-size:13px;" id="stat-ideal-range">-- kg</div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ================================================
+             WIDGET 3 — WATER INTAKE  (col 6)
+        ================================================= -->
+        <div class="widget col-6">
+          <div class="widget-header">
+            <div class="widget-title-row">
+              <div class="widget-icon">💧</div>
+              <div>
+                <div class="widget-title">Water Intake</div>
+                <div class="widget-subtitle">Daily goal: 2,400 ml</div>
+              </div>
+            </div>
+            <span class="widget-badge" id="water-pct-label">0% of daily goal</span>
+          </div>
+
+          <!-- Big number -->
+          <div class="water-goal-row">
+            <span class="water-consumed" id="water-consumed-val">0.0</span>
+            <span class="water-unit">L</span>
+            <span class="water-of-goal">of 2.4 L</span>
+          </div>
+
+          <!-- Cup grid -->
+          <div class="water-cups-grid" id="water-cups-grid"></div>
+
+          <!-- Progress bar -->
+          <div class="water-progress-bar-bg">
+            <div class="water-progress-bar-fill" id="water-progress-fill" style="width:0%"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:6px; margin-bottom:14px;">
+            <span style="font-size:12px;color:#4d6e5a;" id="water-cups-label">0 / 8 cups</span>
+            <span style="font-size:12px;color:#4d6e5a;">1 cup = 300 ml</span>
+          </div>
+
+          <!-- Quick add -->
+          <div class="water-quick-add">
+            <button class="water-add-btn" data-cups="1">
+              <strong>+1 cup</strong>300 ml
+            </button>
+            <button class="water-add-btn" data-cups="2">
+              <strong>+2 cups</strong>600 ml
+            </button>
+            <button class="water-add-btn" data-cups="3">
+              <strong>+3 cups</strong>900 ml
+            </button>
+          </div>
+        </div>
+
+
+        <!-- ================================================
+             WIDGET 4 — NEARBY MARKET  (col 6)
+        ================================================= -->
+        <div class="widget col-6">
+          <div class="widget-header">
+            <div class="widget-title-row">
+              <div class="widget-icon">📍</div>
+              <div>
+                <div class="widget-title">Nearby Markets</div>
+                <div class="widget-subtitle">GeoMarket Ingredient Scanner</div>
+              </div>
+            </div>
+            <span class="widget-badge warning">Module 04</span>
+          </div>
+
+          <!-- Search bar -->
+          <div class="market-search-row">
+            <input type="text" class="market-search-input" id="market-search-input" placeholder="Search ingredient or market..." />
+            <button class="market-search-btn" id="market-search-btn">🔍 Scan</button>
+          </div>
+
+          <!-- Market list (demo data) -->
+          <div class="market-list">
+
+            <div class="market-item">
+              <div class="market-icon-wrap">🏪</div>
+              <div class="market-info">
+                <div class="market-name">Tarlac City Public Market</div>
+                <div class="market-meta">0.8 km away &nbsp;·&nbsp; Open until 6:00 PM</div>
+              </div>
+              <span class="market-status-badge open">Open</span>
+            </div>
+
+            <div class="market-item">
+              <div class="market-icon-wrap">🛒</div>
+              <div class="market-info">
+                <div class="market-name">Puregold Tarlac</div>
+                <div class="market-meta">1.2 km away &nbsp;·&nbsp; Open until 9:00 PM</div>
+              </div>
+              <span class="market-status-badge open">Open</span>
+            </div>
+
+            <div class="market-item">
+              <div class="market-icon-wrap">🥬</div>
+              <div class="market-info">
+                <div class="market-name">Daan Bago Talipapa</div>
+                <div class="market-meta">0.4 km away &nbsp;·&nbsp; Opens 4:00 AM</div>
+              </div>
+              <span class="market-status-badge closed">Closed</span>
+            </div>
+
+          </div>
+
+          <!-- Ingredient availability for today's plan -->
+          <div style="margin-bottom:10px;">
+            <div style="font-size:12px;color:#4d6e5a;margin-bottom:8px;">Today's ingredients found nearby:</div>
+            <div class="market-ingredients">
+              <span class="ingredient-tag found">Eggs</span>
+              <span class="ingredient-tag found">Malunggay</span>
+              <span class="ingredient-tag found">Chicken</span>
+              <span class="ingredient-tag found">Bangus</span>
+              <span class="ingredient-tag found">Kangkong</span>
+              <span class="ingredient-tag">Broccoli</span>
+            </div>
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="market-map-placeholder">
+            <span>🗺️</span>
+            <span>Live map — Module 04 build</span>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- /dash-grid -->
+
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+
+  <!-- Sync second greeting name element -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const n1 = document.getElementById('dash-greeting-name');
+      const n2 = document.getElementById('dash-greeting-name-2');
+      if (n1 && n2) {
+        const observer = new MutationObserver(function () { n2.textContent = n1.textContent; });
+        observer.observe(n1, { childList: true, characterData: true, subtree: true });
+      }
+    });
+  </script>
+
+</body>
+</html>
