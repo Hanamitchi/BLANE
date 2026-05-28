@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     .eq('id', session.user.id)
     .maybeSingle();
 
-  /* If no profile yet, send to onboarding */
+  /* If no profile yet, send to home */
   if (!profile) {
-    window.location.href = 'onboarding.html';
+    window.location.href = 'home.html';
     return;
   }
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   BLANE — Onboarding Module
+   BLANE — home Module
    Collects user profile and saves to Supabase `profiles` table.
    Depends on: supabase-config.js, auth.js
    ============================================================ */
