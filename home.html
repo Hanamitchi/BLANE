@@ -1,47 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BLANE — Biological Adaptive Nutrition Engine. An adaptive nutrition recommendation system integrating real-time health data and local food availability." />
-  <title>BLANE - Dashboard</title>
+  <title>Set Up Your Profile — BLANE</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/home.css" />
 
-  <link rel="stylesheet" href="css/style.css"/>
-  <link rel="icon" href="icon.webp" />
 </head>
 <body>
-<!--  NAVIGATION -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <div class="navbar-inner">
-        <!-- Logo -->
-        <a href="#" class="logo">
-          <span class="logo-text"><span>BL</span>ANE</span>
-        </a>
-        <!-- Desktop nav view  -->
-        <ul class="nav-links">
-          <li><a href="#features">Home</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Profile</a></li>
-        </ul>
-        </div>
-        <!-- Hamburger nav sa mobile user to -->
-        <button class="hamburger" id="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+
+  <!-- TOP BAR -->
+  <div class="onboard-topbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
       </div>
-      <!-- Nav sa mobile -->
-      <div class="mobile-menu" id="mobile-menu">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+      <span class="logo-text"><span>BL</span>ANE</span>
+    </a>
+    <span class="onboard-step-label">
+      Step <span id="step-label-num">1</span> &mdash; <span id="step-label-name">Basic Info</span>
+    </span>
+    <button class="btn btn-outline" style="font-size:13px;padding:7px 16px;" onclick="handleLogout()">Sign out</button>
+  </div>
+
+  <!-- MAIN -->
+  <main class="onboard-page">
+
+    <!-- Progress bar -->
+    <div class="onboard-progress-wrap">
+      <div class="onboard-progress-bar">
+        <div class="onboard-progress-fill" id="progress-fill" style="width:0%"></div>
       </div>
+      <div class="onboard-progress-text" id="progress-text">Step 1 of 4</div>
     </div>
-  </nav>
+
+    <!-- Card -->
+    <div class="onboard-card">
+      <p class="form-error" id="step-error" style="display:none;"></p>
+
+      <!-- STEP 1: Basic Info -->
+      <div class="onboard-step active" id="step-1">
+        <div class="onboard-step-icon">👤</div>
+        <h2>Tell us about yourself</h2>
+        <p class="sub">We use this to calculate your personal nutrition targets accurately.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="ob-name">Full name</label>
+          <input class="form-input" type="text" id="ob-name" placeholder="e.g. Juan dela Cruz" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="ob-age">Age</label>
+            <input class="form-input" type="number" id="ob-age" placeholder="e.g. 24" min="1" max="120" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ob-sex">Biological sex</label>
+            <select class="form-select" id="ob-sex">
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="ob-height">Height (cm)</label>
+            <input class="form-input" type="number" id="ob-height" placeholder="e.g. 168" min="50" max="250" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ob-weight">Weight (kg)</label>
+            <input class="form-input" type="number" id="ob-weight" placeholder="e.g. 65" min="10" max="500" step="0.1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ob-activity">Activity level</label>
+          <select class="form-select" id="ob-activity">
+            <option value="">Select...</option>
+            <option value="sedentary">Sedentary (little or no exercise)</option>
+            <option value="light">Lightly active (1-3 days/week)</option>
+            <option value="moderate">Moderately active (3-5 days/week)</option>
+            <option value="very_active">Very active (6-7 days/week)</option>
+            <option value="extra_active">Extra active (physical job or 2x training)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- STEP 2: Health Goals -->
+      <div class="onboard-step" id="step-2">
+        <div class="onboard-step-icon">🎯</div>
+        <h2>What is your main goal?</h2>
+        <p class="sub">BLANE tailors your calorie targets and macro ratios around this.</p>
+        <div class="goal-grid">
+          <div class="goal-card" data-goal="lose_weight">
+            <span class="goal-card-icon">🔥</span>
+            <span class="goal-card-label">Lose Weight</span>
+            <span class="goal-card-desc">Reduce body fat with a sustainable calorie deficit</span>
+          </div>
+          <div class="goal-card" data-goal="gain_muscle">
+            <span class="goal-card-icon">💪</span>
+            <span class="goal-card-label">Gain Muscle</span>
+            <span class="goal-card-desc">Build lean mass with a protein-rich surplus plan</span>
+          </div>
+          <div class="goal-card" data-goal="maintain">
+            <span class="goal-card-icon">⚖️</span>
+            <span class="goal-card-label">Maintain</span>
+            <span class="goal-card-desc">Stay at current weight with balanced nutrition</span>
+          </div>
+          <div class="goal-card" data-goal="improve_health">
+            <span class="goal-card-icon">❤️</span>
+            <span class="goal-card-label">Improve Health</span>
+            <span class="goal-card-desc">Optimize nutrients for overall wellness and energy</span>
+          </div>
+          <div class="goal-card" data-goal="boost_energy">
+            <span class="goal-card-icon">⚡</span>
+            <span class="goal-card-label">Boost Energy</span>
+            <span class="goal-card-desc">Fuel your day with steady energy and fewer crashes</span>
+          </div>
+          <div class="goal-card" data-goal="manage_condition">
+            <span class="goal-card-icon">🩺</span>
+            <span class="goal-card-label">Manage Condition</span>
+            <span class="goal-card-desc">Eat around a specific health condition or diagnosis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Dietary Restrictions -->
+      <div class="onboard-step" id="step-3">
+        <div class="onboard-step-icon">🥗</div>
+        <h2>Any dietary restrictions?</h2>
+        <p class="sub">Select all that apply. BLANE will never suggest meals that violate these. Skip if none apply.</p>
+        <div class="tag-grid">
+          <div class="tag-pill" data-value="vegetarian"><span class="tag-pill-icon">🥦</span> Vegetarian</div>
+          <div class="tag-pill" data-value="vegan"><span class="tag-pill-icon">🌱</span> Vegan</div>
+          <div class="tag-pill" data-value="halal"><span class="tag-pill-icon">☪️</span> Halal</div>
+          <div class="tag-pill" data-value="kosher"><span class="tag-pill-icon">✡️</span> Kosher</div>
+          <div class="tag-pill" data-value="gluten_free"><span class="tag-pill-icon">🌾</span> Gluten-Free</div>
+          <div class="tag-pill" data-value="dairy_free"><span class="tag-pill-icon">🥛</span> Dairy-Free</div>
+          <div class="tag-pill" data-value="nut_allergy"><span class="tag-pill-icon">🥜</span> Nut Allergy</div>
+          <div class="tag-pill" data-value="shellfish_allergy"><span class="tag-pill-icon">🦐</span> Shellfish Allergy</div>
+          <div class="tag-pill" data-value="egg_free"><span class="tag-pill-icon">🥚</span> Egg-Free</div>
+          <div class="tag-pill" data-value="soy_free"><span class="tag-pill-icon">🫘</span> Soy-Free</div>
+          <div class="tag-pill" data-value="low_sodium"><span class="tag-pill-icon">🧂</span> Low Sodium</div>
+          <div class="tag-pill" data-value="low_sugar"><span class="tag-pill-icon">🍬</span> Low Sugar</div>
+        </div>
+        <div class="form-group" style="margin-top:18px;">
+          <label class="form-label" for="ob-dietary-other">Other restrictions (optional)</label>
+          <input class="form-input" type="text" id="ob-dietary-other" placeholder="e.g. No pork, No MSG..." />
+        </div>
+      </div>
+
+      <!-- STEP 4: Medical Conditions -->
+      <div class="onboard-step" id="step-4">
+        <div class="onboard-step-icon">🩺</div>
+        <h2>Any medical conditions?</h2>
+        <p class="sub">This helps BLANE avoid nutrients that may affect your condition. All data is private and stored securely. Skip if none apply.</p>
+        <div class="tag-grid">
+          <div class="tag-pill" data-value="diabetes_t1"><span class="tag-pill-icon">💉</span> Diabetes Type 1</div>
+          <div class="tag-pill" data-value="diabetes_t2"><span class="tag-pill-icon">🩸</span> Diabetes Type 2</div>
+          <div class="tag-pill" data-value="hypertension"><span class="tag-pill-icon">❤️</span> Hypertension</div>
+          <div class="tag-pill" data-value="high_cholesterol"><span class="tag-pill-icon">🫀</span> High Cholesterol</div>
+          <div class="tag-pill" data-value="gerd"><span class="tag-pill-icon">🔥</span> GERD / Acid Reflux</div>
+          <div class="tag-pill" data-value="ibs"><span class="tag-pill-icon">🫃</span> IBS / Gut Issues</div>
+          <div class="tag-pill" data-value="kidney_disease"><span class="tag-pill-icon">🫘</span> Kidney Disease</div>
+          <div class="tag-pill" data-value="thyroid"><span class="tag-pill-icon">🦋</span> Thyroid Disorder</div>
+          <div class="tag-pill" data-value="anemia"><span class="tag-pill-icon">🩺</span> Anemia</div>
+          <div class="tag-pill" data-value="pcos"><span class="tag-pill-icon">🔵</span> PCOS</div>
+          <div class="tag-pill" data-value="gout"><span class="tag-pill-icon">🦵</span> Gout</div>
+          <div class="tag-pill" data-value="celiac"><span class="tag-pill-icon">🌾</span> Celiac Disease</div>
+        </div>
+        <div class="form-group" style="margin-top:18px;">
+          <label class="form-label" for="ob-medical-other">Other condition (optional)</label>
+          <input class="form-input" type="text" id="ob-medical-other" placeholder="e.g. Lupus, Crohn's disease..." />
+        </div>
+      </div>
+
+      <!-- NAV BUTTONS -->
+      <div class="onboard-nav">
+        <button class="btn btn-outline" id="btn-back" style="visibility:hidden;">&#8592; Back</button>
+        <button class="btn btn-primary" id="btn-next">Continue</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SAVING OVERLAY -->
+  <div class="saving-overlay" id="saving-overlay">
+    <div class="saving-spinner"></div>
+    <p class="saving-text">Saving your profile...</p>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/home.js"></script>
 
 </body>
 </html>
