@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal Plan — BLANE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/mealplan.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="mp-body">
+
+  <!-- =====================================================
+       NAVBAR (same as dashboard)
+  ====================================================== -->
+  <nav class="dash-navbar" style="position:fixed;top:0;left:0;right:0;z-index:100;height:64px;background:rgba(6,13,10,0.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(45,220,122,0.12);display:flex;align-items:center;padding:0 32px;gap:24px;">
+
+    <a href="dashboard.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+      <div style="width:34px;height:34px;background:#2ddc7a;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#060d0a" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C7.4 2 4 5.4 4 9c0 2.4 1.2 4.5 3 5.7V18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-3.3c1.8-1.2 3-3.3 3-5.7 0-3.6-3.4-7-8-7zm0 2c3.3 0 6 2.7 6 5 0 2-1.2 3.7-3 4.6V18H9v-4.4C7.2 12.7 6 11 6 9c0-2.3 2.7-5 6-5z"/>
+        </svg>
+      </div>
+      <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#e8f5ee;letter-spacing:-0.5px;"><span style="color:#2ddc7a;">BL</span>ANE</span>
+    </a>
+
+    <nav class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="mealplan.html" class="dash-nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Meal Plan
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Recipes
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Markets
+      </a>
+      <a href="#" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div style="flex:1;"></div>
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="mp-btn mp-btn-outline" onclick="window.location.href='dashboard.html'" style="font-size:13px;padding:8px 16px;">
+        ← Dashboard
+      </button>
+      <button class="mp-btn mp-btn-primary" onclick="handleLogout()" style="font-size:13px;padding:8px 16px;">
+        Sign out
+      </button>
+    </div>
+
+  </nav>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+  <main class="mp-main">
+    <div class="mp-content">
+
+      <!-- Page header -->
+      <div class="mp-page-header">
+        <div>
+          <h1 class="mp-page-title">Meal Plan</h1>
+          <p class="mp-page-sub">Weekly adaptive plan — updated by BLANE AI</p>
+        </div>
+        <div class="mp-header-actions">
+          <button class="mp-btn mp-btn-outline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export Week
+          </button>
+          <button class="mp-btn mp-btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;">
+              <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            Regenerate Plan
+          </button>
+        </div>
+      </div>
+
+      <!-- Week navigator -->
+      <div class="week-nav">
+        <button class="week-arrow" id="week-prev">&#8249;</button>
+        <span class="week-label" id="week-range-label">Loading...</span>
+        <div class="week-days" id="week-days-container"></div>
+        <button class="week-arrow" id="week-next">&#8250;</button>
+      </div>
+
+      <!-- Day view: meals + grocery panel -->
+      <div class="day-view">
+
+        <!-- Left: meal slots -->
+        <div class="meal-slots-col" id="meal-slots-col">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Right: grocery list panel -->
+        <div class="grocery-panel">
+          <div class="grocery-panel-header">
+            <div class="grocery-panel-title-row">
+              <div class="grocery-panel-icon">🛒</div>
+              <span class="grocery-panel-title">Grocery List</span>
+              <span class="grocery-count-badge" id="grocery-count">0</span>
+            </div>
+            <button class="grocery-clear-btn" id="grocery-clear-btn">Clear all</button>
+          </div>
+
+          <div class="grocery-list" id="grocery-list-items">
+            <div class="grocery-empty">
+              <span class="grocery-empty-icon">🛒</span>
+              No items yet. Add meals to build your list.
+            </div>
+          </div>
+
+          <div class="grocery-cost-total">
+            <span class="grocery-cost-label">Est. today's total</span>
+            <span class="grocery-cost-value" id="grocery-cost-total-val">₱0</span>
+          </div>
+
+          <button class="mp-btn mp-btn-primary" style="width:100%;justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download List
+          </button>
+        </div>
+
+      </div>
+      <!-- /day-view -->
+
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       ADD SLOT MODAL
+  ====================================================== -->
+  <div class="slot-modal-overlay" id="slot-modal-overlay">
+    <div class="slot-modal">
+      <button class="slot-modal-close" id="slot-modal-close">✕</button>
+      <div class="slot-modal-title">Add Meal Slot</div>
+
+      <div class="slot-type-grid">
+        <div class="slot-type-option" data-type="Breakfast">
+          <span class="slot-type-option-icon">🌅</span>
+          <span class="slot-type-option-label">Breakfast</span>
+          <span class="slot-type-option-time">7:00 AM</span>
+        </div>
+        <div class="slot-type-option" data-type="Brunch">
+          <span class="slot-type-option-icon">🍳</span>
+          <span class="slot-type-option-label">Brunch</span>
+          <span class="slot-type-option-time">10:00 AM</span>
+        </div>
+        <div class="slot-type-option" data-type="Lunch">
+          <span class="slot-type-option-icon">☀️</span>
+          <span class="slot-type-option-label">Lunch</span>
+          <span class="slot-type-option-time">12:00 PM</span>
+        </div>
+        <div class="slot-type-option" data-type="Snack">
+          <span class="slot-type-option-icon">🍎</span>
+          <span class="slot-type-option-label">Snack</span>
+          <span class="slot-type-option-time">3:00 PM</span>
+        </div>
+        <div class="slot-type-option" data-type="Dinner">
+          <span class="slot-type-option-icon">🌙</span>
+          <span class="slot-type-option-label">Dinner</span>
+          <span class="slot-type-option-time">6:30 PM</span>
+        </div>
+        <div class="slot-type-option" data-type="Custom">
+          <span class="slot-type-option-icon">✏️</span>
+          <span class="slot-type-option-label">Custom</span>
+          <span class="slot-type-option-time">Your own</span>
+        </div>
+      </div>
+
+      <div class="slot-custom-input-wrap" id="slot-custom-wrap">
+        <label class="form-label" for="slot-custom-name">Custom slot name</label>
+        <input class="form-input" type="text" id="slot-custom-name" placeholder="e.g. Pre-workout, Late night..." />
+      </div>
+
+      <button class="mp-btn mp-btn-primary" id="slot-confirm-btn" style="width:100%;justify-content:center;margin-top:8px;">
+        Add Slot
+      </button>
+    </div>
+  </div>
+
+
+  <!-- =====================================================
+       SWAP MODAL
+  ====================================================== -->
+  <div class="swap-modal-overlay" id="swap-modal-overlay">
+    <div class="swap-modal">
+      <button class="swap-close" id="swap-close">✕</button>
+      <div class="swap-modal-label">Swap Meal</div>
+      <div class="swap-modal-title" id="swap-current-name">Swapping: ...</div>
+
+      <div class="swap-options" id="swap-options-list">
+        <!-- Rendered by JS -->
+      </div>
+
+      <button class="mp-btn mp-btn-primary swap-confirm-btn" id="swap-confirm-btn" style="width:100%;justify-content:center;">
+        Confirm Swap
+      </button>
+    </div>
+  </div>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/mealplan.js"></script>
+
+</body>
+</html>
