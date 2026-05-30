@@ -11,17 +11,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (!session) return;
 
   /* ---- Load profile from Supabase ---- */
+  /* guardPage() already guarantees a profile exists before we get here */
   const { data: profile } = await _supabase
     .from('profiles')
     .select('*')
     .eq('id', session.user.id)
     .maybeSingle();
-
-  /* If no profile yet, send to home */
-  if (!profile) {
-    window.location.href = 'home.html';
-    return;
-  }
 
   /* ---- Populate UI with profile data ---- */
   initGreeting(profile);

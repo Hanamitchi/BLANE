@@ -1,5 +1,5 @@
 /* ============================================================
-   BLANE — home Module
+   BLANE — onboarding Module
    Collects user profile and saves to Supabase `profiles` table.
    Depends on: supabase-config.js, auth.js
    ============================================================ */
@@ -19,7 +19,7 @@ const STEPS = [
    ============================================================ */
 document.addEventListener('DOMContentLoaded', async function () {
 
-  const session = await guardPage();
+  const session = await guardOnboarding();
   if (!session) return;
 
   /* Pre-fill name from auth metadata */

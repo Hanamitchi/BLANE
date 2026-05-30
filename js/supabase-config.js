@@ -10,5 +10,5 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 
 /* After login/register, users go here */
 const REDIRECT_AFTER_LOGIN    = 'dashboard.html';
-const REDIRECT_AFTER_REGISTER = 'home.html';
+const REDIRECT_AFTER_REGISTER = 'onboarding.html';
 const REDIRECT_AFTER_ONBOARD  = 'dashboard.html';
