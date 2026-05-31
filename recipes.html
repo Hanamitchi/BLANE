@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes — BLANE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/recipes.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
+</head>
+<body class="rp-body">
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+  <nav class="dash-navbar">
+
+    <a href="dashboard.html" class="dash-navbar-logo">
+      <div class="dash-navbar-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C7.4 2 4 5.4 4 9c0 2.4 1.2 4.5 3 5.7V18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-3.3c1.8-1.2 3-3.3 3-5.7 0-3.6-3.4-7-8-7zm0 2c3.3 0 6 2.7 6 5 0 2-1.2 3.7-3 4.6V18H9v-4.4C7.2 12.7 6 11 6 9c0-2.3 2.7-5 6-5z"/>
+        </svg>
+      </div>
+      <span class="dash-navbar-logo-text"><span>BL</span>ANE</span>
+    </a>
+
+    <nav class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="mealplan.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Meal Plan
+      </a>
+      <a href="recipes.html" class="dash-nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Recipes
+      </a>
+      <a href="markets.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Markets
+      </a>
+      <a href="profile.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div class="dash-navbar-spacer"></div>
+
+    <div class="dash-navbar-right">
+      <button class="dash-hamburger" id="dash-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="rp-btn rp-btn-outline" onclick="handleLogout()" style="font-size:13px;padding:8px 16px;">
+        Sign out
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="dash-mobile-nav" id="dash-mobile-nav">
+    <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+    <a href="mealplan.html"  class="dash-nav-link">Meal Plan</a>
+    <a href="recipes.html"   class="dash-nav-link active">Recipes</a>
+    <a href="#"              class="dash-nav-link">Markets</a>
+    <a href="#"              class="dash-nav-link">Profile</a>
+    <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+  <main class="rp-main">
+    <div class="rp-content">
+
+      <!-- Page header -->
+      <div class="rp-page-header">
+        <div>
+          <h1 class="rp-page-title">Recipes</h1>
+          <p class="rp-page-sub">Filipino meals matched to your nutrition goals</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:13px;color:#4d6e5a;"><span id="rp-result-count" style="color:#2ddc7a;font-weight:700;">12</span> recipes found</span>
+        </div>
+      </div>
+
+      <!-- Search bar -->
+      <div class="rp-toolbar">
+        <div class="rp-search-wrap">
+          <span class="rp-search-icon">🔍</span>
+          <input
+            type="text"
+            class="rp-search-input"
+            id="rp-search"
+            placeholder="Search by name, ingredient, or meal type..."
+          />
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="rp-filter-row" id="rp-filter-row">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Recipe grid -->
+      <div class="rp-grid" id="rp-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       RECIPE DETAIL MODAL
+  ====================================================== -->
+  <div class="recipe-modal-overlay" id="recipe-modal-overlay">
+    <div class="recipe-modal">
+      <div id="recipe-modal-body">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/recipes.js"></script>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.getElementById('dash-hamburger');
+      const mobileNav = document.getElementById('dash-mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          mobileNav.classList.toggle('open');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markets — BLANE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/markets.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
+</head>
+<body class="mk-body">
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+  <nav class="dash-navbar">
+    <a href="dashboard.html" class="dash-navbar-logo">
+      <div class="dash-navbar-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C7.4 2 4 5.4 4 9c0 2.4 1.2 4.5 3 5.7V18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-3.3c1.8-1.2 3-3.3 3-5.7 0-3.6-3.4-7-8-7zm0 2c3.3 0 6 2.7 6 5 0 2-1.2 3.7-3 4.6V18H9v-4.4C7.2 12.7 6 11 6 9c0-2.3 2.7-5 6-5z"/>
+        </svg>
+      </div>
+      <span class="dash-navbar-logo-text"><span>BL</span>ANE</span>
+    </a>
+
+    <nav class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="mealplan.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Meal Plan
+      </a>
+      <a href="recipes.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Recipes
+      </a>
+      <a href="markets.html" class="dash-nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Markets
+      </a>
+      <a href="profile.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div class="dash-navbar-spacer"></div>
+
+    <div class="dash-navbar-right">
+      <button class="dash-hamburger" id="dash-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="mk-btn mk-btn-outline" onclick="handleLogout()" style="font-size:13px;padding:8px 16px;">
+        Sign out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="dash-mobile-nav" id="dash-mobile-nav">
+    <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+    <a href="mealplan.html"  class="dash-nav-link">Meal Plan</a>
+    <a href="recipes.html"   class="dash-nav-link">Recipes</a>
+    <a href="markets.html"   class="dash-nav-link active">Markets</a>
+    <a href="#"              class="dash-nav-link">Profile</a>
+    <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+  <main class="mk-main">
+    <div class="mk-content">
+
+      <!-- Page header -->
+      <div class="mk-page-header">
+        <div>
+          <h1 class="mk-page-title">Nearby Markets</h1>
+          <p class="mk-page-sub">GeoMarket Ingredient Scanner — Tarlac City, Central Luzon</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:12px;background:rgba(45,220,122,0.1);color:#2ddc7a;border:1px solid rgba(45,220,122,0.25);border-radius:100px;padding:4px 14px;font-weight:500;">● Live data</span>
+        </div>
+      </div>
+
+      <!-- Location bar -->
+      <div class="mk-location-bar">
+        <div class="mk-location-icon">📍</div>
+        <div class="mk-location-text">
+          <div class="mk-location-name">Tarlac City, Central Luzon, PH</div>
+          <div class="mk-location-sub">Showing markets within 3 km radius · Last updated just now</div>
+        </div>
+        <button class="mk-locate-btn" id="mk-locate-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+          Update Location
+        </button>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="mk-filter-row" id="mk-filter-row">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Map + list layout -->
+      <div class="mk-layout">
+
+        <!-- Map -->
+        <div class="mk-map-wrap" id="mk-map-wrap">
+          <svg id="mk-map-svg"></svg>
+
+          <!-- Map controls -->
+          <div class="mk-map-controls">
+            <button class="mk-map-ctrl-btn" title="Zoom in" onclick="alert('Map zoom — Google Maps integration pending')">+</button>
+            <button class="mk-map-ctrl-btn" title="Zoom out" onclick="alert('Map zoom — Google Maps integration pending')">−</button>
+            <button class="mk-map-ctrl-btn" title="Re-center" onclick="alert('Re-center — Google Maps integration pending')">⊙</button>
+          </div>
+
+          <!-- Legend -->
+          <div class="mk-map-legend">
+            <div class="mk-legend-item">
+              <div class="mk-legend-dot" style="background:#60a5fa;"></div> Palengke
+            </div>
+            <div class="mk-legend-item">
+              <div class="mk-legend-dot" style="background:#2ddc7a;"></div> Supermarket
+            </div>
+            <div class="mk-legend-item">
+              <div class="mk-legend-dot" style="background:#fbbf24;"></div> Talipapa
+            </div>
+            <div class="mk-legend-item">
+              <div class="mk-legend-dot" style="background:#a78bfa;"></div> Grocery
+            </div>
+          </div>
+
+          <!-- Tooltip -->
+          <div class="mk-map-tooltip" id="mk-map-tooltip">
+            <div class="mk-map-tooltip-name"></div>
+            <div class="mk-map-tooltip-meta"></div>
+          </div>
+        </div>
+
+        <!-- Market list -->
+        <div class="mk-list-col" id="mk-list-col">
+          <!-- Rendered by JS -->
+        </div>
+
+      </div>
+      <!-- /mk-layout -->
+
+      <!-- Detail panel (expands below) -->
+      <div class="mk-detail-panel" id="mk-detail-panel">
+        <div class="mk-detail-inner" id="mk-detail-inner">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/markets.js"></script>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.getElementById('dash-hamburger');
+      const mobileNav = document.getElementById('dash-mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () {
+          mobileNav.classList.toggle('open');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
