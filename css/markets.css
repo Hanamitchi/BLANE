@@ -318,13 +318,13 @@
    MARKET LIST (right column)
    ============================================================ */
 .mk-list-col {
-  display: flex;
+  display: grid;
   flex-direction: column;
-  gap: 12px;
-  max-height: 420px;
+  gap: 10px;
+  max-height: 450px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(45, 220, 122, 0.2) transparent;
+  scrollbar-color: rgba(45, 220, 122, 0.4) transparent;
   padding-right: 4px;
 }
 
@@ -627,6 +627,7 @@
   gap: 8px;
 }
 
+
 .mk-detail-section-title::after {
   content: '';
   flex: 1;
@@ -635,9 +636,21 @@
 }
 
 .mk-ingredient-table {
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45, 220, 122, 0.4) transparent;
+  padding-right: 10px;
+}
+
+.mk-ingredient-table::-webkit-scrollbar { width: 4px; }
+.mk-ingredient-table::-webkit-scrollbar-track { background: transparent; }
+.mk-ingredient-table::-webkit-scrollbar-thumb {
+  background: rgba(45, 220, 122, 0.2);
+  border-radius: 2px;
 }
 
 .mk-ing-row {
