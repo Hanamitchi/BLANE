@@ -6,17 +6,15 @@
   <title>Markets — BLANE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/markets.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
 <body class="mk-body">
 
-  <!-- =====================================================
-       NAVBAR
-  ====================================================== -->
+  <!-- NAVBAR -->
   <nav class="dash-navbar">
     <a href="dashboard.html" class="dash-navbar-logo">
       <div class="dash-navbar-logo-icon">
@@ -52,49 +50,54 @@
 
     <div class="dash-navbar-spacer"></div>
 
-          <!-- Avatar + dropdown -->
-      <div style="position:relative;">
-        <button class="dash-avatar-btn" id="dash-avatar-btn">
-          <span id="dash-avatar-initials">?</span>
-        </button>
+    <div class="dash-navbar-right">
+      <span class="dash-greeting">Hello, <strong id="nav-greeting-name">...</strong></span>
 
-        <div class="dash-dropdown" id="dash-dropdown">
-          <!-- User info -->
-          <div style="padding:8px 12px 10px; border-bottom:1px solid rgba(45,220,122,0.1); margin-bottom:6px;">
-            <div style="font-size:13px; font-weight:600; color:#e8f5ee;" id="dropdown-full-name">...</div>
-            <div style="font-size:11px; color:#4d6e5a; margin-top:2px;" id="dropdown-email">...</div>
+      <div style="position:relative;">
+        <button class="dash-avatar-btn" id="nav-avatar-btn">
+          <span id="nav-avatar-initial">?</span>
+        </button>
+        <div class="dash-dropdown" id="nav-dropdown">
+          <div class="dash-dropdown-header">
+            <div class="dash-dropdown-name"  id="nav-drop-name">...</div>
+            <div class="dash-dropdown-email" id="nav-drop-email">...</div>
           </div>
-          <a href="#" class="dash-dropdown-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <a href="profile.html" class="dash-dropdown-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             My Profile
           </a>
           <a href="onboarding.html" class="dash-dropdown-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
             Edit Health Profile
-          </a>
-          <a href="#" class="dash-dropdown-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-            Settings
           </a>
           <div class="dash-dropdown-divider"></div>
           <button class="dash-dropdown-item danger" onclick="handleLogout()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Sign out
           </button>
         </div>
       </div>
-      
+
+      <button class="dash-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
-  <!-- Mobile nav -->
-  <div class="dash-mobile-nav" id="dash-mobile-nav">
+  <!-- MOBILE NAV -->
+  <div class="dash-mobile-nav" id="nav-mobile">
     <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
     <a href="mealplan.html"  class="dash-nav-link">Meal Plan</a>
     <a href="recipes.html"   class="dash-nav-link">Recipes</a>
     <a href="markets.html"   class="dash-nav-link active">Markets</a>
-    <a href="#"              class="dash-nav-link">Profile</a>
+    <a href="profile.html"   class="dash-nav-link">Profile</a>
     <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
   </div>
+
+
+
+
+
 
 
   <!-- =====================================================
@@ -190,26 +193,12 @@
   </main>
 
 
-  <!-- =====================================================
-       SCRIPTS
-  ====================================================== -->
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
   <script src="js/markets.js"></script>
-
-  <!-- Mobile nav toggle -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const hamburger = document.getElementById('dash-hamburger');
-      const mobileNav = document.getElementById('dash-mobile-nav');
-      if (hamburger && mobileNav) {
-        hamburger.addEventListener('click', function () {
-          mobileNav.classList.toggle('open');
-        });
-      }
-    });
-  </script>
 
 </body>
 </html>
