@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — BLANE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
+</head>
+<body class="pf-body">
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+  <nav class="dash-navbar">
+    <a href="dashboard.html" class="dash-navbar-logo">
+      <div class="dash-navbar-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C7.4 2 4 5.4 4 9c0 2.4 1.2 4.5 3 5.7V18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-3.3c1.8-1.2 3-3.3 3-5.7 0-3.6-3.4-7-8-7zm0 2c3.3 0 6 2.7 6 5 0 2-1.2 3.7-3 4.6V18H9v-4.4C7.2 12.7 6 11 6 9c0-2.3 2.7-5 6-5z"/>
+        </svg>
+      </div>
+      <span class="dash-navbar-logo-text"><span>BL</span>ANE</span>
+    </a>
+
+    <nav class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="mealplan.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Meal Plan
+      </a>
+      <a href="recipes.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Recipes
+      </a>
+      <a href="markets.html" class="dash-nav-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Markets
+      </a>
+      <a href="profile.html" class="dash-nav-link active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div class="dash-navbar-spacer"></div>
+
+    <div class="dash-navbar-right">
+      <button class="dash-hamburger" id="dash-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="pf-btn pf-btn-outline" onclick="handleLogout()" style="font-size:13px;padding:8px 16px;">
+        Sign out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="dash-mobile-nav" id="dash-mobile-nav">
+    <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+    <a href="mealplan.html"  class="dash-nav-link">Meal Plan</a>
+    <a href="recipes.html"   class="dash-nav-link">Recipes</a>
+    <a href="markets.html"   class="dash-nav-link">Markets</a>
+    <a href="profile.html"   class="dash-nav-link active">Profile</a>
+    <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+  <main class="pf-main">
+    <div class="pf-content">
+
+      <!-- Profile hero -->
+      <div class="pf-hero">
+        <div class="pf-avatar" title="Profile picture">
+          <span id="pf-avatar-initials">?</span>
+          <div class="pf-avatar-edit">✎</div>
+        </div>
+        <div class="pf-hero-info">
+          <div class="pf-hero-name" id="pf-hero-name">Loading...</div>
+          <div class="pf-hero-meta">
+            <span id="pf-joined-date">...</span>
+            <span id="pf-goal-badge" class="pf-hero-badge">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="pf-stats-row">
+
+        <!-- BMI card -->
+        <div class="pf-stat-card">
+          <div class="pf-stat-icon">📊</div>
+          <div class="pf-stat-label">BMI Index</div>
+          <div class="pf-stat-value" id="pf-stat-bmi-val">--</div>
+          <div class="pf-stat-sub" id="pf-stat-bmi-cat">Fill in profile</div>
+          <div class="pf-bmi-scale">
+            <div class="pf-bmi-marker" id="pf-bmi-marker" style="left:0%"></div>
+          </div>
+        </div>
+
+        <!-- Calorie target -->
+        <div class="pf-stat-card">
+          <div class="pf-stat-icon">🔥</div>
+          <div class="pf-stat-label">Daily Calorie Target</div>
+          <div class="pf-stat-value yellow" id="pf-stat-cal-val">--</div>
+          <div class="pf-stat-sub" id="pf-stat-cal-sub">Complete your profile</div>
+          <div class="pf-cal-bar-bg">
+            <div class="pf-cal-bar-fill" id="pf-cal-bar-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="pf-stat-card">
+          <div class="pf-stat-icon">🌱</div>
+          <div class="pf-stat-label">Days on BLANE</div>
+          <div class="pf-stat-value blue" id="pf-stat-days-val">--</div>
+          <div class="pf-stat-sub" id="pf-stat-days-sub">—</div>
+          <div class="pf-progress-bar-bg">
+            <div class="pf-progress-bar-fill" id="pf-progress-bar-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tabs -->
+      <div class="pf-tabs">
+        <button class="pf-tab-btn active" data-tab="basic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Basic Info
+        </button>
+        <button class="pf-tab-btn" data-tab="health">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Health
+        </button>
+        <button class="pf-tab-btn" data-tab="account">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Account
+        </button>
+      </div>
+
+
+      <!-- ================================================
+           TAB: BASIC INFO
+      ================================================= -->
+      <div class="pf-tab-panel active" id="pf-panel-basic">
+        <div class="pf-section-card">
+          <div class="pf-section-header">
+            <div class="pf-section-title-row">
+              <div class="pf-section-icon">👤</div>
+              <div>
+                <div class="pf-section-title">Basic Information</div>
+                <div class="pf-section-sub">Your personal details used to calculate nutrition targets</div>
+              </div>
+            </div>
+            <button class="pf-edit-btn" id="pf-basic-edit-btn" onclick="toggleBasicEdit()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
+          </div>
+
+          <!-- READ VIEW -->
+          <div id="pf-basic-read">
+            <div class="pf-form-grid">
+              <div class="pf-field">
+                <div class="pf-field-label">Full Name</div>
+                <div class="pf-field-value" id="pf-disp-name">—</div>
+              </div>
+              <div class="pf-field">
+                <div class="pf-field-label">Age</div>
+                <div class="pf-field-value" id="pf-disp-age">—</div>
+              </div>
+              <div class="pf-field">
+                <div class="pf-field-label">Biological Sex</div>
+                <div class="pf-field-value" id="pf-disp-sex">—</div>
+              </div>
+              <div class="pf-field">
+                <div class="pf-field-label">Activity Level</div>
+                <div class="pf-field-value" id="pf-disp-activity">—</div>
+              </div>
+              <div class="pf-field">
+                <div class="pf-field-label">Height</div>
+                <div class="pf-field-value" id="pf-disp-height">—</div>
+              </div>
+              <div class="pf-field">
+                <div class="pf-field-label">Weight</div>
+                <div class="pf-field-value" id="pf-disp-weight">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT VIEW -->
+          <div id="pf-basic-edit" style="display:none;">
+            <div class="pf-form-grid">
+              <div class="pf-field" style="grid-column:span 2;">
+                <label class="pf-field-label" for="pf-edit-name">Full Name</label>
+                <input class="pf-input" type="text" id="pf-edit-name" placeholder="e.g. Juan dela Cruz" />
+              </div>
+              <div class="pf-field">
+                <label class="pf-field-label" for="pf-edit-age">Age</label>
+                <input class="pf-input" type="number" id="pf-edit-age" placeholder="e.g. 24" min="1" max="120" />
+              </div>
+              <div class="pf-field">
+                <label class="pf-field-label" for="pf-edit-sex">Biological Sex</label>
+                <select class="pf-select" id="pf-edit-sex">
+                  <option value="">Select...</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="pf-field">
+                <label class="pf-field-label" for="pf-edit-height">Height (cm)</label>
+                <input class="pf-input" type="number" id="pf-edit-height" placeholder="e.g. 168" min="50" max="250" />
+              </div>
+              <div class="pf-field">
+                <label class="pf-field-label" for="pf-edit-weight">Weight (kg)</label>
+                <input class="pf-input" type="number" id="pf-edit-weight" placeholder="e.g. 65" min="10" max="500" step="0.1" />
+              </div>
+              <div class="pf-field" style="grid-column:span 2;">
+                <label class="pf-field-label" for="pf-edit-activity">Activity Level</label>
+                <select class="pf-select" id="pf-edit-activity">
+                  <option value="">Select...</option>
+                  <option value="sedentary">Sedentary (little or no exercise)</option>
+                  <option value="light">Lightly active (1–3 days/week)</option>
+                  <option value="moderate">Moderately active (3–5 days/week)</option>
+                  <option value="very_active">Very active (6–7 days/week)</option>
+                  <option value="extra_active">Extra active (physical job or 2× training)</option>
+                </select>
+              </div>
+            </div>
+            <div class="pf-save-row">
+              <button class="pf-btn pf-btn-outline" onclick="toggleBasicEdit()">Cancel</button>
+              <button class="pf-btn pf-btn-primary" id="pf-basic-save-btn" onclick="saveBasicInfo()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ================================================
+           TAB: HEALTH
+      ================================================= -->
+      <div class="pf-tab-panel" id="pf-panel-health">
+        <div class="pf-section-card">
+          <div class="pf-section-header">
+            <div class="pf-section-title-row">
+              <div class="pf-section-icon">🎯</div>
+              <div>
+                <div class="pf-section-title">Health Goals &amp; Restrictions</div>
+                <div class="pf-section-sub">BLANE uses this to personalise every recommendation</div>
+              </div>
+            </div>
+            <button class="pf-edit-btn" id="pf-health-edit-btn" onclick="toggleHealthEdit()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
+          </div>
+
+          <!-- Goal -->
+          <div class="pf-field-label" style="margin-bottom:10px;">Health Goal</div>
+          <div class="pf-goal-display" id="pf-goal-display"></div>
+
+          <div class="pf-section-divider"></div>
+
+          <!-- Dietary -->
+          <div class="pf-field-label" style="margin-bottom:10px;">Dietary Restrictions</div>
+          <div class="pf-tag-grid" id="pf-dietary-display"></div>
+
+          <div class="pf-section-divider"></div>
+
+          <!-- Medical -->
+          <div class="pf-field-label" style="margin-bottom:10px;">Medical Conditions</div>
+          <div class="pf-tag-grid" id="pf-medical-display"></div>
+
+          <!-- Save row (hidden unless editing) -->
+          <div class="pf-save-row" id="pf-health-save-row" style="display:none;">
+            <button class="pf-btn pf-btn-outline" onclick="toggleHealthEdit()">Cancel</button>
+            <button class="pf-btn pf-btn-primary" id="pf-health-save-btn" onclick="saveHealthInfo()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ================================================
+           TAB: ACCOUNT
+      ================================================= -->
+      <div class="pf-tab-panel" id="pf-panel-account">
+
+        <!-- Account details -->
+        <div class="pf-section-card">
+          <div class="pf-section-header">
+            <div class="pf-section-title-row">
+              <div class="pf-section-icon">📧</div>
+              <div>
+                <div class="pf-section-title">Account Details</div>
+                <div class="pf-section-sub">Your login credentials and account info</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-account-info-row">
+            <div>
+              <div class="pf-account-field-label">Email Address</div>
+              <div class="pf-account-field-value" id="pf-account-email">—</div>
+            </div>
+          </div>
+          <div class="pf-account-info-row">
+            <div>
+              <div class="pf-account-field-label">Member Since</div>
+              <div class="pf-account-field-value" id="pf-account-joined">—</div>
+            </div>
+          </div>
+          <div class="pf-account-info-row">
+            <div>
+              <div class="pf-account-field-label">User ID</div>
+              <div class="pf-account-field-value" style="font-size:12px;font-family:monospace;color:#4d6e5a;" id="pf-account-uid">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password change -->
+        <div class="pf-section-card">
+          <div class="pf-section-header">
+            <div class="pf-section-title-row">
+              <div class="pf-section-icon">🔒</div>
+              <div>
+                <div class="pf-section-title">Password</div>
+                <div class="pf-section-sub">Update your BLANE account password</div>
+              </div>
+            </div>
+            <button class="pf-edit-btn" id="pf-change-pwd-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Change Password
+            </button>
+          </div>
+
+          <div class="pf-password-form" id="pf-password-form">
+            <div class="pf-field">
+              <label class="pf-field-label" for="pf-pwd-new">New Password</label>
+              <input class="pf-input" type="password" id="pf-pwd-new" placeholder="At least 6 characters" />
+            </div>
+            <div class="pf-field">
+              <label class="pf-field-label" for="pf-pwd-confirm">Confirm New Password</label>
+              <input class="pf-input" type="password" id="pf-pwd-confirm" placeholder="Repeat new password" />
+            </div>
+            <div class="pf-save-row" style="margin-top:4px;padding-top:0;border-top:none;">
+              <button class="pf-btn pf-btn-primary" id="pf-pwd-save-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Update Password
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="pf-section-card">
+          <div class="pf-section-header">
+            <div class="pf-section-title-row">
+              <div class="pf-section-icon">⚠️</div>
+              <div>
+                <div class="pf-section-title" style="color:#f87171;">Danger Zone</div>
+                <div class="pf-section-sub">Irreversible account actions</div>
+              </div>
+            </div>
+          </div>
+          <div class="pf-danger-zone">
+            <div class="pf-danger-title">Delete Account</div>
+            <div class="pf-danger-sub">Permanently delete your BLANE account and all associated data including your profile, meal plans, and health history. This cannot be undone.</div>
+            <button class="pf-btn pf-btn-danger" onclick="alert('Account deletion — contact support or implement via Supabase admin API.')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              Delete My Account
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <!-- /account tab -->
+
+    </div>
+  </main>
+
+  <!-- Toast -->
+  <div class="pf-toast" id="pf-toast"></div>
+
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.getElementById('dash-hamburger');
+      const mobileNav = document.getElementById('dash-mobile-nav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function () { mobileNav.classList.toggle('open'); });
+      }
+    });
+  </script>
+
+</body>
+</html>
