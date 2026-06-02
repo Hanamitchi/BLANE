@@ -6,8 +6,10 @@
   <title>Dashboard — BLANE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/feedback.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
@@ -507,6 +509,102 @@
         </div>
 
 
+        <!-- ================================================
+             WIDGET 5 — REAL-TIME BODY FEEDBACK LOOP (col 12)
+        ================================================= -->
+        <div class="fb-widget col-12" id="fb-widget">
+          <div class="fb-widget-header">
+            <div class="fb-widget-title-row">
+              <div class="fb-widget-icon">🔄</div>
+              <div>
+                <div class="fb-widget-title">Real-Time Body Feedback Loop</div>
+                <div class="fb-widget-sub">Log today's health data — targets recalculate automatically</div>
+              </div>
+            </div>
+            <span class="fb-last-logged" id="fb-last-logged">Loading...</span>
+          </div>
+
+          <!-- Today status chips -->
+          <div class="fb-today-status" id="fb-today-status"></div>
+
+          <!-- Metric input grid -->
+          <div class="fb-metric-grid">
+
+            <div class="fb-metric-card">
+              <div class="fb-metric-label">⚖️ Weight</div>
+              <div class="fb-metric-input-row">
+                <input class="fb-metric-input" type="number" id="fb-input-weight"
+                  placeholder="--" min="20" max="300" step="0.1" />
+                <span class="fb-metric-unit">kg</span>
+              </div>
+              <div class="fb-metric-prev" id="fb-prev-weight"></div>
+            </div>
+
+            <div class="fb-metric-card">
+              <div class="fb-metric-label">😴 Sleep</div>
+              <div class="fb-metric-input-row">
+                <input class="fb-metric-input" type="number" id="fb-input-sleep"
+                  placeholder="--" min="0" max="24" step="0.5" />
+                <span class="fb-metric-unit">hrs</span>
+              </div>
+            </div>
+
+            <div class="fb-metric-card">
+              <div class="fb-metric-label">💧 Water</div>
+              <div class="fb-metric-input-row">
+                <input class="fb-metric-input" type="number" id="fb-input-water"
+                  placeholder="--" min="0" max="20" step="1" />
+                <span class="fb-metric-unit">cups</span>
+              </div>
+              <div class="fb-metric-prev" style="font-size:11px;color:#4d6e5a;margin-top:5px;">1 cup = 300 ml</div>
+            </div>
+
+            <div class="fb-metric-card">
+              <div class="fb-metric-label">🔥 Calories Burned</div>
+              <div class="fb-metric-input-row">
+                <input class="fb-metric-input" type="number" id="fb-input-calories"
+                  placeholder="--" min="0" max="5000" step="10" />
+                <span class="fb-metric-unit">kcal</span>
+              </div>
+              <div class="fb-metric-prev" id="fb-prev-calories"></div>
+            </div>
+
+          </div>
+
+          <!-- Log button -->
+          <button class="fb-log-btn" id="fb-log-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Log Today's Health
+          </button>
+
+          <!-- Recalc banner (shows after logging) -->
+          <div class="fb-recalc-banner" id="fb-recalc-banner"></div>
+
+          <!-- Drift alerts -->
+          <div class="fb-drift-panel" id="fb-drift-panel"></div>
+
+          <!-- 7-day sparklines -->
+          <div class="fb-history-row">
+            <div class="fb-sparkline-wrap">
+              <div class="fb-sparkline-label">Weight (7d)</div>
+              <svg class="fb-sparkline-svg" id="fb-spark-weight" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+            </div>
+            <div class="fb-sparkline-wrap">
+              <div class="fb-sparkline-label">Sleep (7d)</div>
+              <svg class="fb-sparkline-svg" id="fb-spark-sleep" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+            </div>
+            <div class="fb-sparkline-wrap">
+              <div class="fb-sparkline-label">Activity (7d)</div>
+              <svg class="fb-sparkline-svg" id="fb-spark-calories" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+            </div>
+          </div>
+
+        </div>
+        <!-- /fb-widget -->
+
+
       </div>
       <!-- /dash-grid -->
 
@@ -519,6 +617,7 @@
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/feedback.js"></script>
   <script src="js/dashboard.js"></script>
 
 </body>

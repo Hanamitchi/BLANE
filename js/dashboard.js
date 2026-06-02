@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (!session) return;
 
   /* ---- Load profile from Supabase ---- */
-  /* guardPage() already guarantees a profile exists before we get here */
+  /* Profile data for populating widgets */
   const { data: profile } = await _supabase
     .from('profiles')
     .select('*')
@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', async function () {
   initMarketWidget();
   initNavDropdown();
   initMobileNav();
+
+  /* ---- Module 01: Real-Time Body Feedback Loop ---- */
+  if (typeof initFeedbackLoop === 'function') {
+    initFeedbackLoop(session, profile);
+  }
 
 });
 
@@ -62,6 +67,50 @@ function initDateHeader() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 }
+
+
+/* ============================================================
+   AVATAR DROPDOWN
+   ============================================================ */
+function initNavDropdown() {
+  const avatarBtn = document.getElementById('dash-avatar-btn');
+  const dropdown  = document.getElementById('dash-dropdown');
+  if (!avatarBtn || !dropdown) return;
+
+  avatarBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function () {
+    dropdown.classList.remove('open');
+  });
+
+  dropdown.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+}
+
+
+/* ============================================================
+   MOBILE NAV
+   ============================================================ */
+function initMobileNav() {
+  const hamburger  = document.getElementById('dash-hamburger');
+  const mobileNav  = document.getElementById('dash-mobile-nav');
+  if (!hamburger || !mobileNav) return;
+
+  hamburger.addEventListener('click', function () {
+    mobileNav.classList.toggle('open');
+  });
+
+  mobileNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileNav.classList.remove('open');
+    });
+  });
+}
+
 
 /* ============================================================
    WIDGET 2 — BMI & BODY STATS
