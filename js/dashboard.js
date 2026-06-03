@@ -30,7 +30,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   /* ---- Module 01: Real-Time Body Feedback Loop ---- */
   if (typeof initFeedbackLoop === 'function') {
-    initFeedbackLoop(session, profile);
+    await initFeedbackLoop(session, profile);
+  }
+
+  /* ---- Module 02: Health Drift Detection ---- */
+  if (typeof initDriftDetection === 'function') {
+    initDriftDetection(session, profile, typeof fbLogs !== 'undefined' ? fbLogs : []);
   }
 
 });

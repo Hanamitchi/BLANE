@@ -229,6 +229,11 @@ async function handleLogSubmit() {
   renderRecalcBanner(newTargets);
   renderStatusChips(fbLogs[0]);
   renderSparklines();
+
+  /* Re-run drift detection with fresh logs */
+  if (typeof initDriftDetection === 'function') {
+    initDriftDetection(fbSession, fbProfile, fbLogs);
+  }
   todayLogged = true;
 
   /* Refresh dashboard BMI + calorie widgets */
