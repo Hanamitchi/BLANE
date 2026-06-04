@@ -1,0 +1,278 @@
+BLANE — Full Project Summary
+
+Project Title
+BLANE (Biological Adaptive Nutrition Engine): An Adaptive Nutrition Recommendation System Integrating Real-Time Health Data and Local Food Availability
+
+
+
+
+Tech Stack: 
+Frontend: Vanilla HTML, CSS, JavaScript (no frameworks)
+Backend/Auth/DB: Supabase
+Fonts: Google Fonts — Syne (display) + DM Sans (body)
+Rules: All CSS units in px (no rem), no :root variables, no var() — every CSS file is standalone with literal values
+Auth Library: https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
+
+
+
+
+File Structure
+blane/
+├── index.html              ← Landing page (public)
+├── onboarding.html         ← New user profile setup (4-step)
+├── dashboard.html          ← Main app home
+├── mealplan.html           ← Weekly meal planner
+├── recipes.html            ← Recipe browser
+├── markets.html            ← Nearby market scanner
+├── profile.html            ← User profile & account settings
+│
+├── css/
+│   ├── style.css           ← Shared base styles (landing page)
+│   ├── nav.css             ← Shared navbar styles (all protected pages)
+│   ├── onboarding.css      ← Onboarding page styles
+│   ├── dashboard.css       ← Dashboard widgets styles
+│   ├── mealplan.css        ← Meal plan page styles
+│   ├── recipes.css         ← Recipes page styles
+│   ├── markets.css         ← Markets page styles
+│   ├── profile.css         ← Profile page styles
+│   ├── feedback.css        ← Module 01: Body Feedback Loop styles
+│   ├── drift.css           ← Module 02: Health Drift Detection styles
+│   └── optimizer.css       ← Module 03: Dynamic Portion Optimizer styles
+│
+└── js/
+    ├── supabase-config.js  ← Supabase keys + redirect constants
+    ├── auth.js             ← Login, register, logout, guards
+    ├── nav.js              ← Shared navbar interactions
+    ├── main.js             ← Landing page UI (modal, scroll, etc.)
+    ├── onboarding.js       ← 4-step profile form + Supabase save
+    ├── dashboard.js        ← Dashboard widgets logic
+    ├── mealplan.js         ← Week nav, slots, swap, grocery list
+    ├── recipes.js          ← Recipe grid, filter, detail modal
+    ├── markets.js          ← SVG map, market list, detail panel
+    ├── profile.js          ← Profile tabs, edit/save, password change
+    ├── feedback.js         ← Module 01: Health logging + recalculation
+    ├── drift.js            ← Module 02: 7-day drift analysis + scoring
+    └── optimizer.js        ← Module 03: Portion scaling algorithm
+
+
+
+Supabase Configuration (js/supabase-config.js)
+javascriptconst SUPABASE_URL  = 'https://jszolfwdnqxhppphzvhj.supabase.co';
+const SUPABASE_ANON = 'YOUR_ANON_KEY';
+
+const REDIRECT_AFTER_LOGIN    = 'dashboard.html';
+const REDIRECT_AFTER_REGISTER = 'onboarding.html';
+const REDIRECT_AFTER_ONBOARD  = 'dashboard.html';
+
+
+
+SQL Tables (run in Supabase SQL Editor)
+profiles table
+sqlcreate table profiles (
+  id                   uuid primary key references auth.users(id) on delete cascade,
+  full_name            text,
+  age                  int,
+  sex                  text,
+  height_cm            numeric,
+  weight_kg            numeric,
+  activity_level       text,
+  goal                 text,
+  dietary_restrictions text[],
+  medical_conditions   text[],
+  updated_at           timestamptz
+);
+
+alter table profiles enable row level security;
+
+create policy "own profile" on profiles
+  for all using (auth.uid() = id);
+
+
+health_logs table
+sqlcreate table health_logs (
+  id               uuid    default gen_random_uuid() primary key,
+  user_id          uuid    references auth.users(id) on delete cascade,
+  logged_at        date    not null default current_date,
+  weight_kg        numeric,
+  sleep_hours      numeric,
+  water_ml         integer,
+  calories_burned  integer,
+  updated_at       timestamptz default now(),
+  unique (user_id, logged_at)
+);
+
+alter table health_logs enable row level security;
+
+create policy "own logs" on health_logs
+  for all using (auth.uid() = user_id);
+
+
+
+Auth & Routing Logic
+Register  → onboarding.html  (always — new user)
+Login     → dashboard.html   (always — no profile check, fixes old bug)
+
+Visit protected page without login  → index.html
+Visit index.html while logged in    → dashboard.html
+
+
+
+
+Guard functions in auth.js:
+
+guardPage() — session check only, used by dashboard, mealplan, recipes, markets, profile
+guardOnboarding() — session check only, used by onboarding
+redirectIfLoggedIn() — used on index.html to skip landing for logged-in users
+
+
+
+
+Pages & Key Features
+index.html — Landing Page
+
+Hero section with BLANE branding, feature overview
+Login / Register modal (tabbed)
+All 9 module descriptions
+How It Works section, CTA, Footer
+Scripts: style.css → main.js (handles modal UI, auth delegates to auth.js)
+
+onboarding.html — 4-Step Profile Setup
+
+Step 1: Name, age, sex, height, weight, activity level
+Step 2: Health goal (6 goal cards)
+Step 3: Dietary restrictions (12 tag pills + free text)
+Step 4: Medical conditions (12 tag pills + free text)
+Saves to Supabase profiles table via upsert
+
+dashboard.html — Main App
+
+Top navbar (shared nav.css + nav.js)
+Widget 1: Today's Meal Plan (tabbed breakfast/lunch/dinner/snack)
+Widget 2: BMI & Body Stats (live from profile)
+Widget 3: Water Intake Tracker (8 cups, sessionStorage)
+Widget 4: Nearby Market Status
+Widget 5: Module 01 — Real-Time Body Feedback Loop
+Widget 6: Module 02 — Health Drift Detection
+
+mealplan.html — Meal Planner
+
+Mon–Sun week navigator with prev/next arrows
+Day view: customizable meal slots (add/remove)
+Meal cards: name, macros, kcal, cost (₱), ingredients, availability tags
+Swap meal modal (shows alternatives)
+Grocery list panel (right side, sessionStorage)
+Add Slot modal (Breakfast/Brunch/Lunch/Snack/Dinner/Supper/Custom)
+Module 03 — Optimize Portions button on each meal card
+
+recipes.html — Recipe Browser
+
+12 Filipino recipes with emoji banners
+Search bar (live filter by name/ingredient)
+Filter tabs: meal type + dietary tags
+3-column grid → click opens detail modal
+Detail modal: macros, kcal, cost, full ingredient list, step-by-step cooking instructions with timers
+
+markets.html — GeoMarket Scanner
+
+Location bar (Tarlac City, Central Luzon)
+Filter by market type: All / Palengke / Supermarket / Talipapa / Grocery
+SVG map with color-coded market pins + hover tooltips
+Market list (sorted by distance) with open/closed status
+Click market → expandable detail panel with ingredient availability + prices (₱)
+Google Maps integration stubbed and documented in markets.js
+
+profile.html — User Profile
+
+Profile hero: avatar initial, name, joined date, goal badge
+Stats row: BMI card, daily calorie target, days on BLANE
+3 tabs:
+
+Basic: name, age, sex, height, weight, activity — editable, saves to Supabase
+Health: goal cards + dietary/medical tag pills — editable, saves to Supabase
+Account: email, joined date, change password (calls supabase.auth.updateUser), danger zone
+
+
+
+
+9 System Modules (Feature Implementation Status)
+
+
+# Module                                                   Status                    Location
+1 ModuleStatusLocation01Real-Time Body Feedback Loop      ✅ Built              dashboard.html widget, feedback.js
+2 Health Drift Detection                                  ✅ Built              dashboard.html widget, drift.js
+3 Dynamic Portion Optimizer                               🔲 Pending
+4GeoMarket Ingredient Scanner
+5Price-Aware Meal Optimizer
+6Seasonal Availability Engine
+7Explainable AI
+8Constraint-Based Planning
+9Recipe Recommendation
+
+
+
+
+Module 01 — Body Feedback Loop Details
+
+Tracks: weight (kg), sleep (hrs), water (cups × 300ml), calories burned
+On save: upserts health_logs, updates profiles.weight_kg if changed
+Recalculates: BMI, TDEE, calorie target, macros (Mifflin-St Jeor formula)
+Drift alerts: weight spike/drop, sleep deficit (<6hrs), low hydration (<1800ml), low activity (<75% TDEE)
+7-day sparklines: SVG mini charts for weight, sleep, activity
+
+Module 02 — Health Drift Detection Details
+
+Algorithm: linear regression slope on 7-day health_logs data
+Metrics: weight trend, sleep pattern (+ irregularity via CV%), hydration, BMI
+Scoring: weighted health score 0–100 (Weight 30%, BMI 25%, Sleep 25%, Hydration 20%)
+Score labels: Excellent (85+), Good (70+), Fair (55+), Needs Attention (40+), At Risk (<40)
+Charts: SVG line charts per metric with gradient fill + regression trendline + endpoint dot
+Re-runs automatically every time Module 01 logs new data
+
+
+
+
+Navbar Architecture (Shared)
+
+css/nav.css — all navbar styles, loaded by every protected page
+js/nav.js — loads user name from Supabase profiles, fills greeting + avatar initial, handles hamburger + dropdown
+Each HTML page has its own navbar HTML with the correct active link
+Standard IDs: nav-greeting-name, nav-avatar-btn, nav-dropdown, nav-hamburger, nav-mobile
+
+
+
+
+Script Load Order (Every Protected Page)
+html<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/[page].js"></script>
+
+
+
+CSS Load Order (Every Protected Page)
+html<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/nav.css" />
+<link rel="stylesheet" href="css/[page].css" />
+<!-- plus any module CSS for that page -->
+
+
+
+Formulas Used
+BMR (Mifflin-St Jeor):
+
+Male: 10w + 6.25h - 5age + 5
+Female: 10w + 6.25h - 5age - 161
+
+TDEE: BMR × activity multiplier
+Goal-adjusted calorie target:
+
+Lose weight: TDEE × 0.85
+Gain muscle: TDEE × 1.10
+All others: TDEE × 1.00
+
+Macro split: Protein 30% (÷4 kcal/g) · Carbs 45% (÷4) · Fats 25% (÷9)
+BMI: weight_kg ÷ (height_m)²
+
+
+
