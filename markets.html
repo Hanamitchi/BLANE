@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/markets.css" />
+  <link rel="stylesheet" href="css/geomarket.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
@@ -120,10 +121,10 @@
       <div class="mk-location-bar">
         <div class="mk-location-icon">📍</div>
         <div class="mk-location-text">
-          <div class="mk-location-name">Tarlac City, Central Luzon, PH</div>
-          <div class="mk-location-sub">Showing markets within 3 km radius · Last updated just now</div>
+          <div class="mk-location-name" id="mk-location-name">Tarlac City, Central Luzon, PH</div>
+          <div class="mk-location-sub" id="mk-location-sub">Showing markets within 3 km radius · Last updated just now</div>
         </div>
-        <button class="mk-locate-btn" id="mk-locate-btn">
+        <button class="mk-locate-btn" id="mk-locate-btn" onclick="document.getElementById('gm-gps-btn') && document.getElementById('gm-gps-btn').click()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
           </svg>
@@ -188,6 +189,11 @@
         </div>
       </div>
 
+      <!-- =====================================================
+           GEOMARKET INGREDIENT SCANNER (Module 04)
+      ====================================================== -->
+      <div id="gm-scanner-root"></div>
+
     </div>
   </main>
 
@@ -198,6 +204,7 @@
   <script src="js/auth.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/markets.js"></script>
+  <script src="js/geomarket.js"></script>
 
 </body>
 </html>
