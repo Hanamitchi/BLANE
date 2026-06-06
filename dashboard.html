@@ -6,7 +6,6 @@
   <title>Dashboard — BLANE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
   <link rel="stylesheet" href="css/feedback.css" />
@@ -114,7 +113,7 @@
       <!-- Page header -->
       <div class="dash-page-header">
         <div>
-          <h1 class="dash-page-title">Good day, <span style="color:#2ddc7a;" id="dash-greeting-name-2">...</span> 👋</h1>
+          <h1 class="dash-page-title">Good day, <span style="color:#2ddc7a;" id="dash-greeting-name">...</span> 👋</h1>
           <p class="dash-page-date" id="dash-date">Loading...</p>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
@@ -385,130 +384,6 @@
             </div>
           </div>
         </div>
-
-
-        <!-- ================================================
-             WIDGET 3 — WATER INTAKE  (col 6)
-        ================================================= -->
-        <div class="widget col-6">
-          <div class="widget-header">
-            <div class="widget-title-row">
-              <div class="widget-icon">💧</div>
-              <div>
-                <div class="widget-title">Water Intake</div>
-                <div class="widget-subtitle">Daily goal: 2,400 ml</div>
-              </div>
-            </div>
-            <span class="widget-badge" id="water-pct-label">0% of daily goal</span>
-          </div>
-
-          <!-- Big number -->
-          <div class="water-goal-row">
-            <span class="water-consumed" id="water-consumed-val">0.0</span>
-            <span class="water-unit">L</span>
-            <span class="water-of-goal">of 2.4 L</span>
-          </div>
-
-          <!-- Cup grid -->
-          <div class="water-cups-grid" id="water-cups-grid"></div>
-
-          <!-- Progress bar -->
-          <div class="water-progress-bar-bg">
-            <div class="water-progress-bar-fill" id="water-progress-fill" style="width:0%"></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-top:6px; margin-bottom:14px;">
-            <span style="font-size:12px;color:#4d6e5a;" id="water-cups-label">0 / 8 cups</span>
-            <span style="font-size:12px;color:#4d6e5a;">1 cup = 300 ml</span>
-          </div>
-
-          <!-- Quick add -->
-          <div class="water-quick-add">
-            <button class="water-add-btn" data-cups="1">
-              <strong>+1 cup</strong>300 ml
-            </button>
-            <button class="water-add-btn" data-cups="2">
-              <strong>+2 cups</strong>600 ml
-            </button>
-            <button class="water-add-btn" data-cups="3">
-              <strong>+3 cups</strong>900 ml
-            </button>
-          </div>
-        </div>
-
-
-        <!-- ================================================
-             WIDGET 4 — NEARBY MARKET  (col 6)
-        ================================================= -->
-        <div class="widget col-6">
-          <div class="widget-header">
-            <div class="widget-title-row">
-              <div class="widget-icon">📍</div>
-              <div>
-                <div class="widget-title">Nearby Markets</div>
-                <div class="widget-subtitle">GeoMarket Ingredient Scanner</div>
-              </div>
-            </div>
-            <span class="widget-badge warning">Module 04</span>
-          </div>
-
-          <!-- Search bar -->
-          <div class="market-search-row">
-            <input type="text" class="market-search-input" id="market-search-input" placeholder="Search ingredient or market..." />
-            <button class="market-search-btn" id="market-search-btn">🔍 Scan</button>
-          </div>
-
-          <!-- Market list (demo data) -->
-          <div class="market-list">
-
-            <div class="market-item">
-              <div class="market-icon-wrap">🏪</div>
-              <div class="market-info">
-                <div class="market-name">Tarlac City Public Market</div>
-                <div class="market-meta">0.8 km away &nbsp;·&nbsp; Open until 6:00 PM</div>
-              </div>
-              <span class="market-status-badge open">Open</span>
-            </div>
-
-            <div class="market-item">
-              <div class="market-icon-wrap">🛒</div>
-              <div class="market-info">
-                <div class="market-name">Puregold Tarlac</div>
-                <div class="market-meta">1.2 km away &nbsp;·&nbsp; Open until 9:00 PM</div>
-              </div>
-              <span class="market-status-badge open">Open</span>
-            </div>
-
-            <div class="market-item">
-              <div class="market-icon-wrap">🥬</div>
-              <div class="market-info">
-                <div class="market-name">Daan Bago Talipapa</div>
-                <div class="market-meta">0.4 km away &nbsp;·&nbsp; Opens 4:00 AM</div>
-              </div>
-              <span class="market-status-badge closed">Closed</span>
-            </div>
-
-          </div>
-
-          <!-- Ingredient availability for today's plan -->
-          <div style="margin-bottom:10px;">
-            <div style="font-size:12px;color:#4d6e5a;margin-bottom:8px;">Today's ingredients found nearby:</div>
-            <div class="market-ingredients">
-              <span class="ingredient-tag found">Eggs</span>
-              <span class="ingredient-tag found">Malunggay</span>
-              <span class="ingredient-tag found">Chicken</span>
-              <span class="ingredient-tag found">Bangus</span>
-              <span class="ingredient-tag found">Kangkong</span>
-              <span class="ingredient-tag">Broccoli</span>
-            </div>
-          </div>
-
-          <!-- Map placeholder -->
-          <div class="market-map-placeholder">
-            <span>🗺️</span>
-            <span>Live map — Module 04 build</span>
-          </div>
-        </div>
-
 
         <!-- ================================================
              WIDGET 5 — REAL-TIME BODY FEEDBACK LOOP (col 12)

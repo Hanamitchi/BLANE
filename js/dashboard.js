@@ -56,7 +56,6 @@ function initGreeting(profile) {
   const dropName = document.getElementById('dropdown-full-name');
   const dropEmail = document.getElementById('dropdown-email');
   if (dropName)  dropName.textContent  = profile.full_name  || name;
-  if (dropEmail) dropEmail.textContent = '';  /* filled from session below */
 
   /* Fill email from session */
   _supabase.auth.getSession().then(function ({ data: { session } }) {
@@ -227,17 +226,6 @@ function initWaterTracker() {
 
   renderCups();
   updateWaterDisplay();
-
-  /* Quick-add buttons */
-  document.querySelectorAll('.water-add-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      const cups = parseInt(btn.getAttribute('data-cups'));
-      filledCups = Math.min(filledCups + cups, TOTAL_CUPS);
-      sessionStorage.setItem('blane_water_cups', filledCups);
-      renderCups();
-      updateWaterDisplay();
-    });
-  });
 }
 
 function renderCups() {
@@ -271,7 +259,6 @@ function updateWaterDisplay() {
   const bar = document.getElementById('water-progress-fill');
   if (bar) bar.style.width = pct + '%';
 
-  setEl('water-pct-label', pct + '% of daily goal');
   setEl('water-cups-label', filledCups + ' / ' + TOTAL_CUPS + ' cups');
 }
 
@@ -288,7 +275,6 @@ function initMarketWidget() {
     const query = searchInput.value.trim();
     if (!query) return;
     /* TODO: integrate real GeoMarket API / Supabase RPC */
-    alert('GeoMarket Scan — coming in Module 04 build.\nSearching for: ' + query);
   });
 
   searchInput.addEventListener('keydown', function (e) {
