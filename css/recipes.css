@@ -57,16 +57,17 @@
    ============================================================ */
 .rp-toolbar {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 12px;
   margin-bottom: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* allows wrapping on mobile */
 }
 
 .rp-search-wrap {
   position: relative;
-  flex: 1;
-  min-width: 220px;
+  width: 100%;
+  max-width: 80%;
+  margin: 0;
 }
 
 .rp-search-icon {
@@ -810,6 +811,11 @@
 
   .rp-toolbar {
     flex-direction: column;
-    align-items: stretch;
+    align-items:baseline;
+  }
+
+  .rp-search-wrap {
+    width: 100%;
+    max-width: 80%;
   }
 }
