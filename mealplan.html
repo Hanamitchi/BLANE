@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/mealplan.css" />
+  <link rel="stylesheet" href="css/seasonal.css" />
   <link rel="stylesheet" href="css/optimizer.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
@@ -93,6 +94,22 @@
     <a href="profile.html"   class="dash-nav-link">Profile</a>
     <button class="dash-nav-link" style="background:none;border:none;cursor:pointer;text-align:left;color:#f87171;" onclick="handleLogout()">Sign out</button>
   </div>
+
+
+
+
+    <div style="flex:1;"></div>
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="mp-btn mp-btn-outline" onclick="window.location.href='dashboard.html'" style="font-size:13px;padding:8px 16px;">
+        ← Dashboard
+      </button>
+      <button class="mp-btn mp-btn-primary" onclick="handleLogout()" style="font-size:13px;padding:8px 16px;">
+        Sign out
+      </button>
+    </div>
+
+  </nav>
 
 
   <!-- =====================================================
@@ -256,6 +273,7 @@
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/seasonal.js"></script>
   <script src="js/optimizer.js"></script>
   <script src="js/mealplan.js"></script>
 

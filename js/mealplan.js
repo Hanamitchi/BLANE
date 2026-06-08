@@ -388,6 +388,11 @@ function buildMealCard(meal, slotIdx) {
   const card = document.createElement('div');
   card.className = 'meal-card';
 
+  /* Seasonal score for this meal */
+  const seasonScore = typeof SEASONAL !== 'undefined'
+    ? SEASONAL.scoreRecipe(meal.ingredients) : null;
+  const seasonBadge = seasonScore ? SEASONAL.badgeHTML(seasonScore) : '';
+
   /* Top section */
   card.innerHTML =
     '<div class="meal-card-top">' +
@@ -399,6 +404,7 @@ function buildMealCard(meal, slotIdx) {
           '<div class="macro-chip"><b>' + meal.protein + 'g</b> Protein</div>' +
           '<div class="macro-chip"><b>' + meal.carbs   + 'g</b> Carbs</div>' +
           '<div class="macro-chip"><b>' + meal.fats    + 'g</b> Fats</div>' +
+          (seasonBadge ? seasonBadge : '') +
         '</div>' +
       '</div>' +
       '<div class="meal-card-right">' +
@@ -407,20 +413,26 @@ function buildMealCard(meal, slotIdx) {
       '</div>' +
     '</div>';
 
-  /* Ingredients section */
+  /* Ingredients section with seasonal tags */
   const ingWrap = document.createElement('div');
   ingWrap.className = 'meal-card-ingredients';
   let ingHTML = '<div class="ingredients-title">Ingredients</div>';
   meal.ingredients.forEach(function (ing) {
+    const seasonTag = typeof SEASONAL !== 'undefined'
+      ? SEASONAL.ingTagHTML(ing.name) : '';
+    const altBanner = typeof SEASONAL !== 'undefined'
+      ? SEASONAL.altBannerHTML(ing.name) : '';
     ingHTML +=
       '<div class="ingredient-row">' +
         '<div class="ingredient-dot"></div>' +
         '<span class="ingredient-name">' + ing.name + '</span>' +
         '<span class="ingredient-qty">' + ing.qty + '</span>' +
+        seasonTag +
         '<span class="ingredient-status ' + ing.status + '">' +
           (ing.status === 'avail' ? '✓ Available' : '⚠ Check market') +
         '</span>' +
-      '</div>';
+      '</div>' +
+      altBanner;
   });
   ingWrap.innerHTML = ingHTML;
   card.appendChild(ingWrap);

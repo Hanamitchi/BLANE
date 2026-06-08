@@ -502,8 +502,15 @@ function buildCard(recipe) {
   const card = document.createElement('div');
   card.className = 'recipe-card';
 
+  /* Seasonal score */
+  const seasonScore   = typeof SEASONAL !== 'undefined'
+    ? SEASONAL.scoreRecipe(recipe.ingredients)
+    : null;
+  const seasonBadge   = seasonScore ? SEASONAL.badgeHTML(seasonScore) : '';
+  const bannerGlow    = seasonScore && seasonScore.cssClass === 'in-season' ? ' in-season-glow' : '';
+
   card.innerHTML =
-    '<div class="recipe-card-banner">' +
+    '<div class="recipe-card-banner' + bannerGlow + '">' +
       recipe.emoji +
       '<span class="recipe-card-type-tag">' + recipe.type + '</span>' +
       '<span class="recipe-card-diff-tag ' + recipe.difficulty + '">' +
@@ -520,6 +527,7 @@ function buildCard(recipe) {
         '<div class="rc-macro-chip"><b>' + recipe.protein + 'g</b> P</div>' +
         '<div class="rc-macro-chip"><b>' + recipe.carbs   + 'g</b> C</div>' +
         '<div class="rc-macro-chip"><b>' + recipe.fats    + 'g</b> F</div>' +
+        (seasonBadge ? seasonBadge : '') +
       '</div>' +
       '<div class="recipe-card-footer">' +
         '<div class="recipe-kcal">' + recipe.kcal + '<small> kcal</small></div>' +
@@ -546,16 +554,23 @@ function openModal(id) {
   /* Macro bar max for scaling */
   const macroMax = Math.max(recipe.protein, recipe.carbs, recipe.fats);
 
-  /* Build ingredients HTML */
+  /* Build ingredients HTML with seasonal tags */
   const ingsHTML = recipe.ingredients.map(function (ing) {
+    const seasonTag = typeof SEASONAL !== 'undefined'
+      ? SEASONAL.ingTagHTML(ing.name) : '';
+    const altBanner = typeof SEASONAL !== 'undefined'
+      ? SEASONAL.altBannerHTML(ing.name) : '';
+
     return '<div class="modal-ingredient-row">' +
       '<div class="modal-ing-dot"></div>' +
       '<span class="modal-ing-name">' + ing.name + '</span>' +
       '<span class="modal-ing-qty">' + ing.qty + '</span>' +
+      seasonTag +
       '<span class="modal-ing-status ' + ing.status + '">' +
         (ing.status === 'avail' ? '✓' : '⚠') +
       '</span>' +
-    '</div>';
+    '</div>' +
+    altBanner;
   }).join('');
 
   /* Build steps HTML */

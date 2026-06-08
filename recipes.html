@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/recipes.css" />
+  <link rel="stylesheet" href="css/seasonal.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
@@ -110,6 +111,7 @@
         <div>
           <h1 class="rp-page-title">Recipes</h1>
           <p class="rp-page-sub">Filipino meals matched to your nutrition goals</p>
+          <div id="rp-season-pill" style="margin-top:8px;"></div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <span style="font-size:13px;color:#4d6e5a;"><span id="rp-result-count" style="color:#2ddc7a;font-weight:700;">12</span> recipes found</span>
@@ -160,7 +162,17 @@
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/seasonal.js"></script>
   <script src="js/recipes.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var pill = document.getElementById('rp-season-pill');
+      if (pill && typeof SEASONAL !== 'undefined') {
+        pill.innerHTML = SEASONAL.currentSeasonPillHTML();
+      }
+    });
+  </script>
 
 </body>
 </html>
