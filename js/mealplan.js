@@ -139,6 +139,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     await initOptimizer(session);
   }
 
+  /* ---- Module 07: Explainable AI ---- */
+  if (typeof initExplainAI === 'function') {
+    await initExplainAI(session);
+  }
+
   /* Seed demo data for today and nearby days */
   seedDemoSlots();
 
@@ -468,6 +473,18 @@ function buildMealCard(meal, slotIdx) {
     if (typeof openOptimizer === 'function') openOptimizer(meal.id, total);
   });
   actionBar.appendChild(optBtn);
+
+  /* Why Recommended button (Explainable AI) */
+  const whyBtn = document.createElement('button');
+  whyBtn.className = 'xai-why-btn';
+  whyBtn.innerHTML =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' +
+    ' Why?';
+  whyBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (typeof openXaiPopover === 'function') openXaiPopover(whyBtn, meal);
+  });
+  actionBar.appendChild(whyBtn);
 
   /* Toggle ingredients */
   const toggleBtn = document.createElement('button');

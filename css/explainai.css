@@ -1,0 +1,338 @@
+/* ============================================================
+   BLANE — Explainable AI Stylesheet
+   Standalone: no :root variables, all values literal.
+   All units in px (no rem).
+   ============================================================ */
+
+/* ---- WHY button on meal card ---- */
+.xai-why-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 9px;
+  padding: 6px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #a78bfa;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.xai-why-btn:hover {
+  background: rgba(167, 139, 250, 0.18);
+  border-color: rgba(167, 139, 250, 0.4);
+  color: #c4b5fd;
+}
+
+.xai-why-btn.active {
+  background: rgba(167, 139, 250, 0.2);
+  border-color: #a78bfa;
+}
+
+.xai-why-btn svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* ---- Transparent overlay to close popover ---- */
+.xai-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 490;
+  background: transparent;
+}
+
+/* ---- Popover ---- */
+.xai-popover {
+  position: fixed;
+  z-index: 500;
+  width: 320px;
+  background: #0d1a12;
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  animation: xai-pop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  overflow: hidden;
+}
+
+@keyframes xai-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.xai-popover::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  background: #0d1a12;
+  border-left: 1px solid rgba(167, 139, 250, 0.28);
+  border-top: 1px solid rgba(167, 139, 250, 0.28);
+  transform: rotate(45deg);
+  border-radius: 2px 0 0 0;
+}
+
+.xai-popover.arrow-bottom::before {
+  top: auto;
+  bottom: -6px;
+  transform: rotate(225deg);
+}
+
+.xai-popover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.5), transparent);
+}
+
+/* ---- Header ---- */
+.xai-pop-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 16px 0;
+  gap: 8px;
+}
+
+.xai-pop-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.xai-pop-icon {
+  width: 30px;
+  height: 30px;
+  background: rgba(167, 139, 250, 0.15);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.xai-pop-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8f5ee;
+}
+
+.xai-pop-meal {
+  font-size: 11px;
+  color: #4d6e5a;
+  margin-top: 1px;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.xai-pop-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4d6e5a;
+  font-size: 16px;
+  padding: 2px 4px;
+  line-height: 1;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.xai-pop-close:hover {
+  color: #e8f5ee;
+}
+
+/* ---- Confidence bar ---- */
+.xai-confidence {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 0;
+}
+
+.xai-confidence-label {
+  font-size: 11px;
+  color: #4d6e5a;
+  white-space: nowrap;
+}
+
+.xai-confidence-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: #111f16;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.xai-confidence-bar-fill {
+  height: 5px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #a78bfa, #c4b5fd);
+  transition: width 0.7s ease;
+}
+
+.xai-confidence-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a78bfa;
+  white-space: nowrap;
+}
+
+/* ---- Reason chips ---- */
+.xai-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px 16px 0;
+}
+
+.xai-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.xai-chip.goal {
+  background: rgba(45, 220, 122, 0.12);
+  color: #2ddc7a;
+  border: 1px solid rgba(45, 220, 122, 0.25);
+}
+
+.xai-chip.macro {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+}
+
+.xai-chip.budget {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.22);
+}
+
+.xai-chip.seasonal {
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.22);
+}
+
+.xai-chip.diet {
+  background: rgba(45, 220, 122, 0.08);
+  color: #2ddc7a;
+  border: 1px solid rgba(45, 220, 122, 0.18);
+}
+
+.xai-chip.neutral {
+  background: rgba(77, 110, 90, 0.15);
+  color: #4d6e5a;
+  border: 1px solid rgba(77, 110, 90, 0.25);
+}
+
+/* ---- Explanation rows ---- */
+.xai-explanation {
+  padding: 10px 16px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.xai-reason-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: #8aab96;
+  line-height: 1.55;
+}
+
+.xai-reason-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.xai-reason-dot.green {
+  background: #2ddc7a;
+}
+
+.xai-reason-dot.blue {
+  background: #60a5fa;
+}
+
+.xai-reason-dot.yellow {
+  background: #fbbf24;
+}
+
+.xai-reason-dot.purple {
+  background: #a78bfa;
+}
+
+.xai-reason-dot.teal {
+  background: #34d399;
+}
+
+.xai-reason-text strong {
+  color: #e8f5ee;
+  font-weight: 600;
+}
+
+/* ---- Footer ---- */
+.xai-pop-footer {
+  padding: 10px 16px 14px;
+  border-top: 1px solid rgba(167, 139, 250, 0.08);
+  margin-top: 8px;
+  font-size: 10px;
+  color: #4d6e5a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.xai-model-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  border-radius: 100px;
+  padding: 2px 8px;
+  font-size: 10px;
+  color: #a78bfa;
+}
+
+@media (max-width: 400px) {
+  .xai-popover {
+    width: 280px;
+  }
+}

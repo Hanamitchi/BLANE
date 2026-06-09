@@ -393,6 +393,11 @@ document.addEventListener('DOMContentLoaded', async function () {
   const session = await guardPage();
   if (!session) return;
 
+  /* ---- Module 08: Constraint-Based Planning ---- */
+  if (typeof initConstraints === 'function') {
+    await initConstraints(session);
+  }
+
   buildFilterBar();
   renderGrid();
 
@@ -509,8 +514,19 @@ function buildCard(recipe) {
   const seasonBadge   = seasonScore ? SEASONAL.badgeHTML(seasonScore) : '';
   const bannerGlow    = seasonScore && seasonScore.cssClass === 'in-season' ? ' in-season-glow' : '';
 
+  /* Constraint violations */
+  const violations    = typeof checkRecipeViolations !== 'undefined'
+    ? checkRecipeViolations(recipe) : [];
+  const violationBadge = typeof getViolationBadgeHTML !== 'undefined'
+    ? getViolationBadgeHTML(violations) : '';
+  const violationClass = violations.length > 0 ? ' has-violation' : '';
+  const stripeClass    = violations.some(function (v) { return v.severity === 'allergy'; })
+    ? ' violation-stripe' : '';
+
+  card.className = 'recipe-card' + violationClass;
+
   card.innerHTML =
-    '<div class="recipe-card-banner' + bannerGlow + '">' +
+    '<div class="recipe-card-banner' + bannerGlow + stripeClass + '">' +
       recipe.emoji +
       '<span class="recipe-card-type-tag">' + recipe.type + '</span>' +
       '<span class="recipe-card-diff-tag ' + recipe.difficulty + '">' +
@@ -527,7 +543,8 @@ function buildCard(recipe) {
         '<div class="rc-macro-chip"><b>' + recipe.protein + 'g</b> P</div>' +
         '<div class="rc-macro-chip"><b>' + recipe.carbs   + 'g</b> C</div>' +
         '<div class="rc-macro-chip"><b>' + recipe.fats    + 'g</b> F</div>' +
-        (seasonBadge ? seasonBadge : '') +
+        (seasonBadge    ? seasonBadge    : '') +
+        (violationBadge ? violationBadge : '') +
       '</div>' +
       '<div class="recipe-card-footer">' +
         '<div class="recipe-kcal">' + recipe.kcal + '<small> kcal</small></div>' +
@@ -645,6 +662,11 @@ function openModal(id) {
         buildMacroBar('Carbs',   recipe.carbs,   macroMax, '#60a5fa') +
         buildMacroBar('Fats',    recipe.fats,    macroMax, '#fbbf24') +
       '</div>' +
+
+      /* Constraint violations (Module 08) */
+      (typeof checkRecipeViolations !== 'undefined'
+        ? getViolationDetailHTML(checkRecipeViolations(recipe))
+        : '') +
 
       /* Ingredients */
       '<div class="modal-section-title" style="margin-top:22px;">Ingredients</div>' +
