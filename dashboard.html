@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/dashboard.css" />
   <link rel="stylesheet" href="css/feedback.css" />
   <link rel="stylesheet" href="css/drift.css" />
+  <link rel="stylesheet" href="css/recommend.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
@@ -386,6 +387,29 @@
         </div>
 
         <!-- ================================================
+        WIDGET 7 — RECIPE RECOMMENDATIONS (col 12)
+        ================================================= -->
+        <div class="rec-widget col-12">
+          <div class="rec-header">
+            <div class="rec-header-left">
+              <div class="rec-header-icon">⭐</div>
+              <div>
+                <div class="rec-header-title">Recommended for You</div>
+                <div class="rec-header-sub">Top 3 picks · Based on your goal &amp; dietary profile</div>
+              </div>
+            </div>
+            <a href="recipes.html" class="rec-view-all-btn">
+              View all recipes →
+            </a>
+          </div>
+          <div id="rec-widget-body">
+            <!-- Rendered by recommend.js -->
+          </div>
+        </div>
+
+
+
+        <!-- ================================================
              WIDGET 5 — REAL-TIME BODY FEEDBACK LOOP (col 12)
         ================================================= -->
         <div class="fb-widget col-12" id="fb-widget">
@@ -506,6 +530,7 @@
   <script src="js/nav.js"></script>
   <script src="js/feedback.js"></script>
   <script src="js/drift.js"></script>
+  <script src="js/recommend.js"></script>
   <script src="js/dashboard.js"></script>
 
 </body>

@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     initDriftDetection(session, profile, typeof fbLogs !== 'undefined' ? fbLogs : []);
   }
 
+    /* ---- Module 09: Recipe Recommendations ---- */
+  if (typeof initRecommendations === 'function') {
+    initRecommendations(session, profile);
+  }
 });
 
 
@@ -56,6 +60,8 @@ function initGreeting(profile) {
   const dropName = document.getElementById('dropdown-full-name');
   const dropEmail = document.getElementById('dropdown-email');
   if (dropName)  dropName.textContent  = profile.full_name  || name;
+  if (dropEmail) dropEmail.textContent = '';  /* filled from session below */
+
 
   /* Fill email from session */
   _supabase.auth.getSession().then(function ({ data: { session } }) {
