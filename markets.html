@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/markets.css" />
   <link rel="stylesheet" href="css/geomarket.css" />
   <link rel="stylesheet" href="css/priceopt.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232ddc7a'/><text y='22' x='6' font-size='18' font-family='sans-serif' font-weight='900' fill='%23060d0a'>B</text></svg>" />
 </head>
@@ -125,7 +126,7 @@
           <div class="mk-location-name" id="mk-location-name">Tarlac City, Central Luzon, PH</div>
           <div class="mk-location-sub" id="mk-location-sub">Showing markets within 3 km radius · Last updated just now</div>
         </div>
-        <button class="mk-locate-btn" id="mk-locate-btn" onclick="document.getElementById('gm-gps-btn') && document.getElementById('gm-gps-btn').click()">
+        <button class="mk-locate-btn" id="mk-locate-btn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
           </svg>
@@ -143,13 +144,12 @@
 
         <!-- Map -->
         <div class="mk-map-wrap" id="mk-map-wrap">
-          <svg id="mk-map-svg"></svg>
-
+<div id="map"></div>
           <!-- Map controls -->
           <div class="mk-map-controls">
-            <button class="mk-map-ctrl-btn" title="Zoom in" onclick="alert('Map zoom — Google Maps integration pending')">+</button>
-            <button class="mk-map-ctrl-btn" title="Zoom out" onclick="alert('Map zoom — Google Maps integration pending')">−</button>
-            <button class="mk-map-ctrl-btn" title="Re-center" onclick="alert('Re-center — Google Maps integration pending')">⊙</button>
+            <button class="mk-map-ctrl-btn" title="Zoom in" onclick="map && map.zoomIn()">+</button>
+            <button class="mk-map-ctrl-btn" title="Zoom out" onclick="map && map.zoomOut()">−</button>
+            <button class="mk-map-ctrl-btn" title="Re-center" onclick="recenterMap()">⊙</button>
           </div>
 
           <!-- Legend -->
@@ -205,6 +205,7 @@
 
 
   <!-- SCRIPTS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>

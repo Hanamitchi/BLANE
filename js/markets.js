@@ -21,8 +21,7 @@ const MARKETS = [
     open: true,
     hours: '4:00 AM – 6:00 PM',
     address: 'F. Tañedo St., Tarlac City',
-    mapX: 52,   /* percent position on SVG map */
-    mapY: 44,
+    lat: 15.4889, lng: 120.5985,
     availableTags: ['Eggs', 'Malunggay', 'Bangus', 'Kangkong', 'Garlic', 'Onion'],
     ingredients: [
       { name: 'Eggs',          qty: '1 tray (30 pcs)',  price: '₱180',  status: 'avail'   },
@@ -46,8 +45,7 @@ const MARKETS = [
     open: true,
     hours: '8:00 AM – 9:00 PM',
     address: 'MacArthur Highway, Tarlac City',
-    mapX: 65,
-    mapY: 36,
+    lat: 15.4910, lng: 120.5920,
     availableTags: ['Oats', 'Peanut Butter', 'Brown Rice', 'Chicken', 'Broccoli'],
     ingredients: [
       { name: 'Rolled Oats',   qty: '500g pack',        price: '₱85',   status: 'avail'   },
@@ -71,8 +69,7 @@ const MARKETS = [
     open: false,
     hours: '4:00 AM – 10:00 AM',
     address: 'Daan Bago, Tarlac City',
-    mapX: 38,
-    mapY: 58,
+    lat: 15.4760, lng: 120.6010,
     availableTags: ['Kangkong', 'Malunggay', 'Camote', 'Eggplant', 'Squash'],
     ingredients: [
       { name: 'Kangkong',      qty: '1 bundle',         price: '₱10',   status: 'avail'   },
@@ -94,8 +91,7 @@ const MARKETS = [
     open: true,
     hours: '9:00 AM – 9:00 PM',
     address: 'SM City Tarlac, Tarlac City',
-    mapX: 72,
-    mapY: 62,
+    lat: 15.5005, lng: 120.5860,
     availableTags: ['Chicken', 'Pork', 'Brown Rice', 'Broccoli', 'Oats', 'Honey'],
     ingredients: [
       { name: 'Chicken Breast', qty: 'per kg',          price: '₱210',  status: 'avail'   },
@@ -117,8 +113,7 @@ const MARKETS = [
     open: true,
     hours: '9:00 AM – 9:00 PM',
     address: 'Robinsons Place Tarlac',
-    mapX: 58,
-    mapY: 68,
+    lat: 15.4795, lng: 120.5870,
     availableTags: ['Chicken', 'Eggs', 'Peanut Butter', 'Oats', 'Fish Sauce'],
     ingredients: [
       { name: 'Chicken Breast', qty: 'per kg',          price: '₱215',  status: 'avail'   },
@@ -139,8 +134,7 @@ const MARKETS = [
     open: true,
     hours: '4:00 AM – 5:00 PM',
     address: 'Balibago, Tarlac City',
-    mapX: 42,
-    mapY: 30,
+    lat: 15.4860, lng: 120.5790,
     availableTags: ['Bangus', 'Tilapia', 'Pork', 'Beef', 'Garlic', 'Tomato'],
     ingredients: [
       { name: 'Bangus',        qty: 'per kg',           price: '₱150',  status: 'avail'   },
@@ -161,8 +155,7 @@ const MARKETS = [
     open: true,
     hours: '6:00 AM – 10:00 PM',
     address: 'Brgy. Tibag, Tarlac City',
-    mapX: 47,
-    mapY: 50,
+    lat: 15.4830, lng: 120.6040,
     availableTags: ['Eggs', 'Garlic', 'Onion', 'Cooking Oil', 'Salt', 'Sugar'],
     ingredients: [
       { name: 'Eggs',          qty: 'per pc',           price: '₱7',    status: 'avail'   },
@@ -201,10 +194,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   renderMap();
   renderList();
 
-  /* Locate button (demo) */
-  document.getElementById('mk-locate-btn').addEventListener('click', function () {
-    alert('Location detected: Tarlac City, Central Luzon\n\n(Live geolocation will use navigator.geolocation in production)');
-  });
+  /* Locate button — real GPS via navigator.geolocation */
+  document.getElementById('mk-locate-btn').addEventListener('click', locateUser);
 
   /* Detail panel close */
   document.getElementById('mk-detail-close').addEventListener('click', closeDetail);
@@ -251,116 +242,188 @@ function getFiltered() {
 }
 
 /* ============================================================
-   SVG MAP
+   MAP (Leaflet + OpenStreetMap — 100% free, no API key)
    ============================================================ */
+let map;
+let markersLayer;
+let userMarker;
+let userAccuracyCircle;
+let userCoords = null; /* { lat, lng } once GPS succeeds */
+
+/* Default center: Tarlac City (used until GPS locates the user) */
+const DEFAULT_CENTER = { lat: 15.4858, lng: 120.5970 };
+
 function renderMap() {
-  const svg    = document.getElementById('mk-map-svg');
-  const W      = 100; /* viewBox percent coords */
-  const H      = 100;
+  /* Init map only once */
+  if (!map) {
+    map = L.map('map', { zoomControl: false })
+      .setView([DEFAULT_CENTER.lat, DEFAULT_CENTER.lng], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    markersLayer = L.layerGroup().addTo(map);
+
+    /* Re-render filtered markers when zoom/pan happens isn't needed —
+       Leaflet keeps markers fixed; we only rebuild on filter change. */
+  }
+
+  /* Clear old market markers (NOT the user marker) */
+  markersLayer.clearLayers();
+
   const filtered = getFiltered();
-  const filteredIds = filtered.map(function (m) { return m.id; });
 
-  svg.innerHTML = '';
-  svg.setAttribute('viewBox', '0 0 100 100');
-  svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+  filtered.forEach(function (market) {
+    const meta  = TYPE_META[market.type] || TYPE_META.grocery;
+    const icon  = buildMarketDivIcon(market, meta);
 
-  /* ---- Background grid ---- */
-  const defs = mkSVG('defs');
-  const pattern = mkSVG('pattern');
-  setAttrs(pattern, { id: 'grid', width: '8', height: '8', patternUnits: 'userSpaceOnUse' });
-  const pPath = mkSVG('path');
-  setAttrs(pPath, { d: 'M 8 0 L 0 0 0 8', fill: 'none', stroke: 'rgba(45,220,122,0.06)', 'stroke-width': '0.3' });
-  pattern.appendChild(pPath);
-  defs.appendChild(pattern);
-  svg.appendChild(defs);
+    const marker = L.marker([market.lat, market.lng], { icon: icon }).addTo(markersLayer);
 
-  /* Background */
-  const bg = mkSVG('rect');
-  setAttrs(bg, { width: '100', height: '100', fill: '#060d0a' });
-  svg.appendChild(bg);
+    marker.bindPopup(
+      '<div style="font-family:DM Sans,sans-serif;min-width:160px;">' +
+        '<div style="font-weight:700;font-size:13px;margin-bottom:3px;">' + market.icon + ' ' + market.name + '</div>' +
+        '<div style="font-size:11px;color:#666;">' + meta.label + ' · ' + market.distance + ' km · ' +
+          (market.open ? '<span style="color:#16a34a;">Open</span>' : '<span style="color:#dc2626;">Closed</span>') +
+        '</div>' +
+      '</div>'
+    );
 
-  /* Grid overlay */
-  const gridRect = mkSVG('rect');
-  setAttrs(gridRect, { width: '100', height: '100', fill: 'url(#grid)' });
-  svg.appendChild(gridRect);
+    marker.on('click', function () { selectMarket(market.id); });
+  });
+}
 
-  /* ---- Stylized road lines ---- */
-  const roads = [
-    'M 0 50 Q 30 48 50 50 T 100 52',
-    'M 50 0 Q 52 30 50 50 T 48 100',
-    'M 0 30 Q 40 32 70 28 T 100 35',
-    'M 20 100 Q 22 70 45 55',
-    'M 100 75 Q 75 73 55 68',
-  ];
-  roads.forEach(function (d) {
-    const road = mkSVG('path');
-    setAttrs(road, { d: d, fill: 'none', stroke: 'rgba(45,220,122,0.1)', 'stroke-width': '1.2', 'stroke-linecap': 'round' });
-    svg.appendChild(road);
+/* ---- Custom colored pin icon per market type ---- */
+function buildMarketDivIcon(market, meta) {
+  const isSelected = market.id === selectedMarketId;
+  const color = market.open ? meta.color : '#9ca3af';
+  return L.divIcon({
+    className: 'mk-leaflet-pin',
+    html:
+      '<div style="' +
+        'width:30px;height:30px;border-radius:50% 50% 50% 0;' +
+        'background:' + color + ';transform:rotate(-45deg);' +
+        'border:2px solid ' + (isSelected ? '#ffffff' : 'rgba(0,0,0,0.25)') + ';' +
+        'box-shadow:0 2px 6px rgba(0,0,0,0.4);' +
+        'display:flex;align-items:center;justify-content:center;' +
+      '">' +
+        '<span style="transform:rotate(45deg);font-size:14px;">' + market.icon + '</span>' +
+      '</div>',
+    iconSize:   [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -28],
+  });
+}
+
+/* ============================================================
+   GPS — "Update Location" points to where the user actually is
+   ============================================================ */
+function locateUser() {
+  const btn = document.getElementById('mk-locate-btn');
+  if (!navigator.geolocation) {
+    alert('Your browser does not support geolocation.');
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.querySelector('span') ? null : null; }
+  setLocationBarText('Locating you…', 'Requesting GPS permission');
+
+  navigator.geolocation.getCurrentPosition(
+    function (pos) {
+      userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      placeUserMarker(userCoords, pos.coords.accuracy);
+      recalcDistancesFromUser(userCoords);
+
+      map.setView([userCoords.lat, userCoords.lng], 15, { animate: true });
+
+      setLocationBarText(
+        'Your Current Location',
+        'Lat ' + userCoords.lat.toFixed(5) + ', Lng ' + userCoords.lng.toFixed(5) + ' · Accuracy ±' + Math.round(pos.coords.accuracy) + 'm'
+      );
+
+      renderList();
+      if (btn) btn.disabled = false;
+    },
+    function (err) {
+      let msg = 'Could not get your location.';
+      if (err.code === 1) msg = 'Location permission denied. Showing default area instead.';
+      if (err.code === 2) msg = 'Location unavailable. Showing default area instead.';
+      if (err.code === 3) msg = 'Location request timed out. Showing default area instead.';
+      setLocationBarText('Tarlac City, Central Luzon, PH', msg);
+      if (btn) btn.disabled = false;
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+  );
+}
+
+/* Drop / move the blue "you are here" marker + accuracy ring */
+function placeUserMarker(coords, accuracyMeters) {
+  const youIcon = L.divIcon({
+    className: 'mk-user-pin',
+    html:
+      '<div style="position:relative;width:18px;height:18px;">' +
+        '<div style="position:absolute;inset:0;background:#2563eb;border:3px solid #ffffff;' +
+        'border-radius:50%;box-shadow:0 0 0 4px rgba(37,99,235,0.25);"></div>' +
+      '</div>',
+    iconSize:   [18, 18],
+    iconAnchor: [9, 9],
   });
 
-  /* ---- User location pin ---- */
-  const userX = 50, userY = 50;
-  const pulse = mkSVG('circle');
-  setAttrs(pulse, { cx: userX, cy: userY, r: '10', fill: 'none', stroke: 'rgba(45,220,122,0.35)', 'stroke-width': '0.8' });
-  pulse.classList.add('mk-user-pulse');
-  svg.appendChild(pulse);
+  if (userMarker) {
+    userMarker.setLatLng([coords.lat, coords.lng]);
+  } else {
+    userMarker = L.marker([coords.lat, coords.lng], { icon: youIcon, zIndexOffset: 1000 })
+      .addTo(map)
+      .bindPopup('<strong>You are here</strong>');
+  }
 
-  const userDot = mkSVG('circle');
-  setAttrs(userDot, { cx: userX, cy: userY, r: '3.5', fill: '#2ddc7a', stroke: '#060d0a', 'stroke-width': '1' });
-  svg.appendChild(userDot);
+  if (userAccuracyCircle) {
+    userAccuracyCircle.setLatLng([coords.lat, coords.lng]);
+    userAccuracyCircle.setRadius(accuracyMeters || 50);
+  } else {
+    userAccuracyCircle = L.circle([coords.lat, coords.lng], {
+      radius: accuracyMeters || 50,
+      color: '#2563eb',
+      fillColor: '#2563eb',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+  }
+}
 
-  const userLabel = mkSVG('text');
-  setAttrs(userLabel, { x: userX + 5, y: userY - 5, fill: '#2ddc7a', 'font-size': '3.5', 'font-family': 'Syne, sans-serif', 'font-weight': '600' });
-  userLabel.textContent = 'You';
-  svg.appendChild(userLabel);
-
-  /* ---- Market pins ---- */
-  MARKETS.forEach(function (market) {
-    const isFiltered = filteredIds.includes(market.id);
-    const isSelected = market.id === selectedMarketId;
-    const meta       = TYPE_META[market.type] || TYPE_META.grocery;
-    const color      = market.open ? meta.color : '#4d6e5a';
-    const opacity    = isFiltered ? 1 : 0.25;
-
-    const group = mkSVG('g');
-    group.style.cursor  = 'pointer';
-    group.style.opacity = opacity;
-
-    /* Shadow */
-    const shadow = mkSVG('ellipse');
-    setAttrs(shadow, { cx: market.mapX, cy: market.mapY + 6.5, rx: '4', ry: '1.5', fill: 'rgba(0,0,0,0.4)' });
-    group.appendChild(shadow);
-
-    /* Pin body (teardrop shape) */
-    const pinPath = mkSVG('path');
-    const px = market.mapX, py = market.mapY;
-    setAttrs(pinPath, {
-      d: 'M ' + px + ' ' + (py + 7) + ' C ' + (px - 5) + ' ' + (py + 2) + ' ' + (px - 5) + ' ' + (py - 5) + ' ' + px + ' ' + (py - 5) + ' C ' + (px + 5) + ' ' + (py - 5) + ' ' + (px + 5) + ' ' + (py + 2) + ' ' + px + ' ' + (py + 7) + ' Z',
-      fill: isSelected ? color : (market.open ? color : '#4d6e5a'),
-      stroke: isSelected ? '#e8f5ee' : 'rgba(6,13,10,0.6)',
-      'stroke-width': isSelected ? '0.8' : '0.5',
-      filter: isSelected ? 'drop-shadow(0 0 3px ' + color + ')' : 'none',
-    });
-    group.appendChild(pinPath);
-
-    /* Pin center dot */
-    const pinDot = mkSVG('circle');
-    setAttrs(pinDot, { cx: px, cy: py, r: '1.5', fill: '#060d0a' });
-    group.appendChild(pinDot);
-
-    /* Distance label */
-    const distLabel = mkSVG('text');
-    setAttrs(distLabel, { x: px, y: py - 8, 'text-anchor': 'middle', fill: '#8aab96', 'font-size': '2.8', 'font-family': 'DM Sans, sans-serif' });
-    distLabel.textContent = market.distance + 'km';
-    group.appendChild(distLabel);
-
-    /* Hover tooltip & click */
-    group.addEventListener('mouseenter', function (e) { showTooltip(e, market); });
-    group.addEventListener('mouseleave', hideTooltip);
-    group.addEventListener('click',      function ()  { selectMarket(market.id); });
-
-    svg.appendChild(group);
+/* Recompute every market's distance from the real user position (Haversine) */
+function recalcDistancesFromUser(coords) {
+  MARKETS.forEach(function (m) {
+    m.distance = haversineKm(coords.lat, coords.lng, m.lat, m.lng);
   });
+}
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLng / 2) ** 2;
+  return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 10) / 10;
+}
+
+function setLocationBarText(nameText, subText) {
+  const nameEl = document.getElementById('mk-location-name');
+  const subEl  = document.getElementById('mk-location-sub');
+  if (nameEl) nameEl.textContent = nameText;
+  if (subEl)  subEl.textContent  = subText;
+}
+
+/* Recenter button — goes to user's GPS pin if known, else default area */
+function recenterMap() {
+  if (!map) return;
+  if (userCoords) {
+    map.setView([userCoords.lat, userCoords.lng], 15, { animate: true });
+  } else {
+    map.setView([DEFAULT_CENTER.lat, DEFAULT_CENTER.lng], 14, { animate: true });
+  }
 }
 
 /* ============================================================
@@ -510,75 +573,3 @@ function closeDetail() {
   renderMap();
   renderList();
 }
-
-/* ============================================================
-   MAP TOOLTIP
-   ============================================================ */
-function showTooltip(e, market) {
-  const tip  = document.getElementById('mk-map-tooltip');
-  const wrap = document.getElementById('mk-map-wrap');
-  const rect = wrap.getBoundingClientRect();
-  const meta = TYPE_META[market.type] || TYPE_META.grocery;
-
-  tip.querySelector('.mk-map-tooltip-name').textContent = market.name;
-  tip.querySelector('.mk-map-tooltip-meta').textContent =
-    meta.label + ' · ' + market.distance + ' km · ' + (market.open ? 'Open' : 'Closed');
-
-  tip.classList.add('visible');
-
-  /* Position near cursor */
-  const x = e.clientX - rect.left + 12;
-  const y = e.clientY - rect.top  - 10;
-  tip.style.left = Math.min(x, wrap.offsetWidth - 200) + 'px';
-  tip.style.top  = Math.max(y - tip.offsetHeight, 8) + 'px';
-}
-
-function hideTooltip() {
-  document.getElementById('mk-map-tooltip').classList.remove('visible');
-}
-
-/* ============================================================
-   SVG HELPERS
-   ============================================================ */
-function mkSVG(tag) {
-  return document.createElementNS('http://www.w3.org/2000/svg', tag);
-}
-
-function setAttrs(el, attrs) {
-  Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
-}
-
-/* ============================================================
-   GOOGLE MAPS INTEGRATION (uncomment when API key is ready)
-   ============================================================
-   Replace the SVG map block in markets.html with:
-   <div id="google-map" style="width:100%;height:100%;"></div>
-
-   Then replace renderMap() with:
-
-   let googleMap;
-   function renderMap() {
-     if (!googleMap) {
-       googleMap = new google.maps.Map(document.getElementById('google-map'), {
-         center: { lat: 15.4755, lng: 120.5963 },  // Tarlac City
-         zoom: 14,
-         styles: [ ... dark theme styles ... ]
-       });
-     }
-     const filtered = getFiltered();
-     MARKETS.forEach(function (market) {
-       if (!filtered.find(function(m){ return m.id === market.id; })) return;
-       new google.maps.Marker({
-         position: { lat: market.lat, lng: market.lng },
-         map: googleMap,
-         title: market.name,
-         icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8,
-                 fillColor: TYPE_META[market.type].color, fillOpacity: 1,
-                 strokeColor: '#060d0a', strokeWeight: 2 }
-       }).addListener('click', function () { selectMarket(market.id); });
-     });
-   }
-
-   Add to each market object: lat & lng coordinates.
-   Load script: <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=renderMap"></script>
-   ============================================================ */

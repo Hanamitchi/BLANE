@@ -173,6 +173,8 @@ function buildScannerSection() {
 
 /* ============================================================
    GPS
+   (Delegates to the single GPS flow in markets.js so there is
+    only one source of truth for user location + distances.)
    ============================================================ */
 function bindGpsBadge() {
   const btn = document.getElementById('gm-gps-btn');
@@ -186,60 +188,31 @@ function bindGpsBadge() {
     btn.className   = 'gm-gps-badge locating';
     btn.textContent = '📡 Locating...';
 
-    navigator.geolocation.getCurrentPosition(
-      function (pos) {
-        gmUserCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    /* Reuse markets.js locateUser() — it sets userCoords, drops the
+       "you are here" pin, recalculates real distances, and updates
+       the location bar. We just reflect the result in this badge. */
+    if (typeof locateUser === 'function') {
+      locateUser();
+    }
 
-        btn.className   = 'gm-gps-badge located';
-        btn.textContent = '✓ GPS: ' +
-          gmUserCoords.lat.toFixed(4) + ', ' + gmUserCoords.lng.toFixed(4);
-
-        /* Update location bar in markets.js */
-        const locName = document.getElementById('mk-location-name');
-        const locSub  = document.getElementById('mk-location-sub');
-        if (locName) locName.textContent = 'GPS Location · ' +
-          gmUserCoords.lat.toFixed(5) + ', ' + gmUserCoords.lng.toFixed(5);
-        if (locSub)  locSub.textContent  = 'Live GPS · Updated just now · Tarlac City, Central Luzon';
-
-        /* Re-sort markets by distance using coords */
-        sortMarketsByGps(gmUserCoords);
-      },
-      function (err) {
+    /* Poll briefly for the result set by markets.js */
+    const checkInterval = setInterval(function () {
+      if (typeof userCoords !== 'undefined' && userCoords) {
+        clearInterval(checkInterval);
+        gmUserCoords     = userCoords;
+        btn.className    = 'gm-gps-badge located';
+        btn.textContent  = '✓ GPS: ' + userCoords.lat.toFixed(4) + ', ' + userCoords.lng.toFixed(4);
+        if (typeof renderList === 'function') renderList();
+      }
+    }, 400);
+    setTimeout(function () {
+      clearInterval(checkInterval);
+      if (!gmUserCoords) {
         btn.className   = 'gm-gps-badge';
         btn.textContent = '⚠️ GPS denied — using default location';
-        console.warn('Geolocation error:', err.message);
-      },
-      { timeout: 8000, enableHighAccuracy: true }
-    );
+      }
+    }, 11000);
   });
-}
-
-/* Sort markets by GPS distance (Haversine) */
-function sortMarketsByGps(coords) {
-  if (!coords || typeof MARKETS === 'undefined') return;
-  MARKETS.forEach(function (market) {
-    /* Demo: assign rough lat/lng around Tarlac City */
-    if (!market.lat) {
-      market.lat = 15.4755 + (market.mapX - 50) * 0.002;
-      market.lng = 120.5963 + (market.mapY - 50) * 0.002;
-    }
-    market.distance = haversine(coords.lat, coords.lng, market.lat, market.lng);
-  });
-  MARKETS.sort(function (a, b) { return a.distance - b.distance; });
-
-  /* Re-render the market list */
-  if (typeof renderList === 'function') renderList();
-  if (typeof renderMap  === 'function') renderMap();
-}
-
-function haversine(lat1, lng1, lat2, lng2) {
-  const R  = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a  = Math.sin(dLat/2) * Math.sin(dLat/2) +
-             Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-             Math.sin(dLng/2) * Math.sin(dLng/2);
-  return parseFloat((R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(2));
 }
 
 /* ============================================================
