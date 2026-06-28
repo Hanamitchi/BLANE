@@ -1,0 +1,41 @@
+[
+  {
+    "fct_id": "A001",
+    "food_name": "Rice, cooked, white",
+    "alternate_name": "Kanin",
+    "base_weight_g": 100,
+    "moisture_g": 68.7,
+    "energy_kcal": 130,
+    "protein_g": 2.4,
+    "total_fat_g": 0.2,
+    "available_carbohydrate_g": 28.7,
+    "dietary_fiber_g": 0.4,
+    "ash_g": 0.1
+  },
+  {
+    "fct_id": "F024",
+    "food_name": "Round scad, raw",
+    "alternate_name": "Galunggong, sariwa",
+    "base_weight_g": 100,
+    "moisture_g": 76.2,
+    "energy_kcal": 101,
+    "protein_g": 21.3,
+    "total_fat_g": 1.7,
+    "available_carbohydrate_g": 0.0,
+    "dietary_fiber_g": 0.0,
+    "ash_g": 1.4
+  },
+  {
+    "fct_id": "V012",
+    "food_name": "Bitter gourd, fruit, raw",
+    "alternate_name": "Ampalaya bunga, sariwa",
+    "base_weight_g": 100,
+    "moisture_g": 93.1,
+    "energy_kcal": 19,
+    "protein_g": 1.1,
+    "total_fat_g": 0.1,
+    "available_carbohydrate_g": 3.4,
+    "dietary_fiber_g": 1.8,
+    "ash_g": 0.5
+  }
+]
