@@ -141,9 +141,6 @@ Deno.serve(async (req) => {
             required: ["verdict", "verdict_label", "explanation", "flagged_condition"],
           },
         },
-        safetySettings: [
-          { category: "HARM_CATEGORY_MEDICAL", threshold: "BLOCK_NONE" },
-        ],
       }),
     });
 
